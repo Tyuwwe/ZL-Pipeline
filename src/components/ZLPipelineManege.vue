@@ -10,7 +10,7 @@
         <div class="ZLPipeline-Bar">
             <el-icon class="ZLPipeline-Bar-Icon"><Promotion /></el-icon>
             <div class="ZLPipeline-TitleBox">
-                <div class="ZLPipeline-Title">ZL Pipeline Example</div>
+                <div class="ZLPipeline-Title">ZL Pipeline Management</div>
                 <div class="ZLPipeline-sTitle">A better pipeline.</div>
             </div>
         </div>
@@ -36,8 +36,8 @@
                         <div class="ZLPipeline-Node-Desc">{{ node.description }}</div>
 
                     </div>
-                    <div v-else-if="node.is_enable" :class="nodeClassEnum[node.status]" @click="openPop(node)">
-                        <div class="ZLPipeline-Node-Status">{{ nodeStatusEnum[node.status] }}</div>
+                    <div v-else-if="node.is_enable" class="ZLPipeline-Node-Top Node-Manage" @click="openNodePop(node)">
+                        <div class="ZLPipeline-Node-Status">普通节点</div>
                         <div v-if="node.name.length <= 7" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else-if="node.name.length <= 9" style="font-size: 1.25rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else style="font-size: 1rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
@@ -56,7 +56,7 @@
                         </el-popover>
                     </div>
                     <div v-else class="ZLPipeline-Node-Top Node-Disabled">
-                        <div class="ZLPipeline-Node-Status">已禁用</div>
+                        <div class="ZLPipeline-Node-Status">已禁用节点</div>
                         <div v-if="node.name.length <= 7" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else-if="node.name.length <= 9" style="font-size: 1.25rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else style="font-size: 1rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
@@ -86,7 +86,7 @@
                     <div v-else-if="node.is_enable" class="ZLPipeline-Node-Bottom">
                         <div 
                             v-for="child in node.child" 
-                            :class="nodeChildClassEnum[child.status]"
+                            class="ZLPipeline-Node-ChildNode"
                         >
                             <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name">{{ child.name }}</div>
                             <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;">{{ child.name }}</div>
@@ -96,7 +96,7 @@
                     <div v-else class="ZLPipeline-Node-Bottom Node-Disabled">
                         <div 
                             v-for="child in node.child" 
-                            :class="nodeChildClassEnum[child.status]"
+                            class="ZLPipeline-Node-ChildNode"
                         >
                             <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name">{{ child.name }}</div>
                             <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;">{{ child.name }}</div>
@@ -124,11 +124,10 @@
                 <div class="ZLPipeline-ContextMenu-Title-Node">{{ contextMenuTarget.name }}</div>
             </div>
             <div class="ZLPipeline-ContextMenu-Item" @click="openNodePop"><el-icon class="ContextIcon"><Setting /></el-icon>节点设置</div>
-            <div v-show="contextMenuTarget.is_enable" @click="openPop" class="ZLPipeline-ContextMenu-Item"><el-icon class="ContextIcon"><MessageBox /></el-icon>执行结果</div>
             <div v-show="contextMenuTarget.is_enable" @click="disableNode" class="ZLPipeline-ContextMenu-Item"><el-icon class="ContextIcon"><CircleClose /></el-icon>禁用此节点</div>
             <div v-show="!contextMenuTarget.is_enable" @click="enableNode" class="ZLPipeline-ContextMenu-Item"><el-icon class="ContextIcon"><CircleCheck /></el-icon>启用此节点</div>
         </div>
-        <div v-show="bDisplayEdit" @click="switchEditingMode" ref="editingControl" class="ZLPipeline-EditingControl">
+        <div @click="switchEditingMode" ref="editingControl" class="ZLPipeline-EditingControl">
             <div class="EditingControlText" v-if="bEditingMode" style="color: white;" >退出编辑模式</div>
             <div class="EditingControlText" v-else >进入编辑模式</div>
             <el-icon class="EditingControlIcon">
@@ -136,41 +135,47 @@
                 <EditPen class="iconSwitchAnim" v-else />
             </el-icon>
         </div>
-        <ZLPipelineStatusPop :popMeta="popMeta" :popStatusList="popStatusList" :pop-visible="popVis" @close="closePop" />
+        <div class="manageControls">
+            <div class="manageControlsBtns">
+                <el-button @click="importJson()" class="manageControlBtn" type="warning" plain round>
+                    <el-icon class="btnIcon"><Upload /></el-icon>
+                    <div class="btnText">导入JSON</div>
+                </el-button>
+                <el-button @click="saveAsJson()" class="manageControlBtn" type="success" plain round>
+                    <el-icon class="btnIcon"><Download /></el-icon>
+                    <div class="btnText">导出JSON</div>
+                </el-button>
+            </div>
+        </div>
+        <input accept=".json" v-show="false" ref="jsonFileInput" type="file" @change="handleFIle"/>
         <ZLPipelineNodePop :popMeta="contextMenuTarget" :pop-visible="popNodeVis" @close="closeNodePop" />
     </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import ZLPipelineStatusPop from './ZLPipeline-StatusPop.vue';
 import ZLPipelineNodePop from './ZLPipeline-NodePop.vue';
-import { Message, MessageBox } from '@element-plus/icons-vue';
 import mouseScroll from '@/assets/icon/mouseScroll.svg'
-import type { RefSymbol } from '@vue/reactivity';
 import { ElMessage } from 'element-plus';
+import { saveAs } from 'file-saver'
 
 const props = defineProps({
     pipelineVisible: {
         type: Boolean,
         default: false
-    },
-    bDisplayEdit: {
-        type: Boolean,
-        default: false
-    },
+    }
 })
 const emit = defineEmits(['close'])
 const pipelineContainer = ref<any>()
 const nodesContainer = ref<any>()
 const contextMenu = ref<any>()
+const jsonFileInput = ref<any>()
 const editingControl = ref<any>()
 const scaleSize = ref(1.0)
 const popVis = ref(false)
 const popNodeVis = ref(false)
 const contextVis = ref(false)
 const bEditingMode = ref(false)
-const popStatusList = ref([])
 const contextMenuTarget = ref<pipelineDS>({
     name: 'Name',
     description: 'Desc',
@@ -180,9 +185,7 @@ const contextMenuTarget = ref<pipelineDS>({
     result: []
 
 })
-const popMeta = ref({
-    title: ''
-})
+
 const pipelineData = ref([
     {
         name: '同步版本',
@@ -759,23 +762,6 @@ const scaleGraph = (scale: number) => {
     }
 }
 
-function openPop(node: any = null) {
-    if (bEditingMode.value) {
-        console.log(node)
-        node.target.style.marginRight = "200px"
-        return
-    }
-    if (node.name) {
-        popMeta.value.title = node.name
-        popStatusList.value = node.result ? node.result : []
-    }
-    popVis.value = true
-}
-
-function closePop() {
-    popVis.value = false
-}
-
 function openNodePop(node: any = null) {
     if (bEditingMode.value) {
         ElMessage('当前为编辑模式，无法使用此操作')
@@ -797,13 +783,32 @@ function enableNode() {
     contextMenuTarget.value.is_enable = true;
 }
 
+function saveAsJson() {
+    let file = new File([JSON.stringify(pipelineData.value)], "exportPipeline.json", {type: "text/plain;charset=utf-8"});
+    saveAs(file);
+}
+
+function importJson() {
+    jsonFileInput.value.value = ''
+    jsonFileInput.value.click()
+}
+
+function handleFIle(event: any) {
+    let file = event.target.files[0] as File
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = (thisFile)=>{
+      if(thisFile.target && thisFile.target.result) {
+        pipelineData.value = JSON.parse(thisFile.target.result.toString())
+      }
+    }
+}
+
 const openContextMenu = (e: MouseEvent, node: any) => {
     if (bEditingMode.value) {
         ElMessage('当前为编辑模式，无法使用此操作')
         return
     }
-    popMeta.value.title = node.name
-    popStatusList.value = node.result
     contextVis.value = true
     contextMenuTarget.value = node
     contextMenu.value.style.left = e.clientX + 'px'
@@ -886,35 +891,6 @@ function deletePop(targetNode: any) {
     }
 }
 
-interface statusEnum {
-    [key: string]: string;
-    finished: string;
-    running: string;
-    waiting: string;
-    error: string;
-}
-
-const nodeClassEnum: statusEnum = {
-    'finished': 'ZLPipeline-Node-Top Node-Finished',
-    'running': 'ZLPipeline-Node-Top Node-Running',
-    'waiting': 'ZLPipeline-Node-Top Node-Waiting',
-    'error': 'ZLPipeline-Node-Top Node-Error',
-}
-
-const nodeChildClassEnum: statusEnum = {
-    'finished': 'ZLPipeline-Node-ChildNode Child-Node-Finished',
-    'running': 'ZLPipeline-Node-ChildNode Child-Node-Running',
-    'waiting': 'ZLPipeline-Node-ChildNode Child-Node-Waiting',
-    'error': 'ZLPipeline-Node-ChildNode Child-Node-Error',
-}
-
-const nodeStatusEnum: statusEnum = {
-    'finished': '已结束',
-    'running': '运行中',
-    'waiting': '等待中',
-    'error': '执行出错',
-}
-
 </script>
 
 <style lang="less" scoped>
@@ -949,7 +925,7 @@ const nodeStatusEnum: statusEnum = {
     }
     100% {
         width: 150px;
-        height: 200px;
+        height: 160px;
         opacity: 1;
     }
 }
@@ -989,6 +965,43 @@ const nodeStatusEnum: statusEnum = {
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans SC', sans-serif;
+}
+
+.manageControls {
+    position: absolute;
+    right: 40px;
+    top: 120px;
+    display: flex;
+}
+
+.manageControlBtn {
+    height: 40px;
+    overflow: hidden;
+    transition-duration: .4s;
+    width: 40px;
+}
+
+.btnText {
+    opacity: 0;
+    transition-duration: .1s;
+}
+
+.btnIcon {
+    margin-right: -1rem;
+    transform: translateX(25px);
+    transition-duration: .1s;
+}
+
+.manageControlBtn:hover {
+    width: 100px;
+}
+
+.manageControlBtn:hover .btnText {
+    opacity: 1;
+}
+
+.manageControlBtn:hover .btnIcon {
+    opacity: 0;
 }
 
 .ZLPipeline-Container:has(.ZLPipeline-Control:hover) {
@@ -1101,6 +1114,15 @@ const nodeStatusEnum: statusEnum = {
     cursor: pointer;
     transition-duration: 0.5s;
     border-radius: 20px 20px 0 0;
+    z-index: 9999;
+}
+
+.Node-Editing {
+    background: linear-gradient(45deg,#ffffff 0%,#cacaca 100%); 
+}
+
+.Node-Manage {
+    background: linear-gradient(45deg,#ebf5ff 0%,#ffeaea 100%); 
 }
 
 .ZLPipeline-Node-Top:hover {
@@ -1204,29 +1226,6 @@ const nodeStatusEnum: statusEnum = {
     font-weight: lighter;
 }
 
-.Node-Finished {
-    background: linear-gradient(28deg,#abd9bd 0%,#f1ffea 100%);
-}
-
-.Node-Running {
-    background: linear-gradient(90deg,#F1F1F1 0%,#ecc666 50%,#F1F1F1 100%); 
-    background-size: 2000%;
-    animation: animNode 3s infinite; 
-}
-
-.Node-Waiting {
-    background: linear-gradient(90deg,#f4f7ba 0%,#e9d0d0 100%); 
-    background-size: 2000%;
-    animation: animNode 5s infinite; 
-}
-
-.Node-Error  {
-    background: linear-gradient(244deg,#c25254 0%,#750303 100%); 
-    background-size: 2000%;
-    animation: animNode 2s infinite; 
-    color: white;
-}
-
 .Node-Disabled  {
     opacity: 0.3;
     transition-duration: 0.5s;
@@ -1237,7 +1236,7 @@ const nodeStatusEnum: statusEnum = {
 }
 
 .ZLPipeline-Node:has(.Node-Editing:hover) {
-    margin-right: 120px;
+    margin-right: 100px;
 }
 
 @keyframes hintShow {
@@ -1373,7 +1372,7 @@ const nodeStatusEnum: statusEnum = {
     animation: showContext 0.2s;
     position: absolute;
     width: 150px;
-    height: 200px;
+    height: 160px;
     z-index: 1100;
     background-color: #e4e4e4;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

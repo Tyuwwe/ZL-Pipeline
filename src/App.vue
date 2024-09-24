@@ -15,34 +15,44 @@
       <el-button 
         size="large" 
         type="success" 
-        @click="pipelineVis=true"
-        icon="StarFilled"
+        @click="manageVis=true"
+        icon="Management"
         round
-        disabled
       >
-        Preview ZL Progress Bar
+        Preview ZL Manage
       </el-button>
     </div>
     <div class="ZLPipeline-Buttom">
-      Version 0924
+      Version 0924 <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
     </div>
   </div>
 
   <ZLPipeline 
-    :pipelineVisible="pipelineVis" 
+    :pipelineVisible="pipelineVis"
+    :bDisplayEdit="false"
     @close="closePipeline"
+  />
+
+  <ZLPipelineManage 
+    :pipelineVisible="manageVis" 
+    @close="closeManage"
   />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
 import ZLPipeline from './components/ZLPipeline.vue';
+import ZLPipelineManage from './components/ZLPipelineManege.vue';
 
 const pipelineVis = ref(false)
+const manageVis = ref(false)
 
 function closePipeline() {
   pipelineVis.value = false
+}
+
+function closeManage() {
+  manageVis.value = false
 }
 </script>
 
