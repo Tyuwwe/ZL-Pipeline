@@ -25,17 +25,16 @@
                 </el-form-item>
                 <el-form-item label="子节点列表">
                     <el-table :data="popMeta.child" stripe class="childTable" empty-text="没有子节点">
-                        <el-table-column prop="id" label="ID" width="80" />
-                        <el-table-column prop="name" label="子节点名" />
+                        <el-table-column prop="name" label="子节点名" width="140" />
                         <el-table-column prop="order" label="执行优先级" width="140">
                             <template #default="scope">
                                 <el-input-number style="width: 100%;" v-model="scope.row.order" :min="1" :max="50" @change="handleChange" />
                             </template>
                         </el-table-column>
-                        <el-table-column prop="game_fn" label="游戏功能" width="180">
+                        <el-table-column prop="game_type" label="游戏功能" width="180">
                             <template #default="scope">
                                 <el-select
-                                v-model="scope.row.game_fn"
+                                v-model="scope.row.game_type"
                                 multiple
                                 collapse-tags
                                 collapse-tags-tooltip
@@ -43,7 +42,7 @@
                                 style="width: 100%"
                                 >
                                 <el-option
-                                    v-for="item in gameFnOptions"
+                                    v-for="item in gameTypeOptions"
                                     :key="item"
                                     :label="item"
                                     :value="item"
@@ -64,10 +63,10 @@
                                 />
                             </template>
                         </el-table-column>
-                        <el-table-column prop="" label="操作" width="180">
+                        <el-table-column prop="" label="操作" width="120">
                             <template #default="scope">
                                 <div class="mb-4">
-                                    <el-button type="danger" icon="Delete" style="height: 23px;" round>删除</el-button>
+                                    <el-button type="danger" icon="Delete" style="height: 23px;" @click="deleteNode(scope.row)" round>删除</el-button>
                                 </div>
                             </template>
                         </el-table-column>
@@ -88,7 +87,7 @@ import { ref } from 'vue';
 const popContainer = ref<any>()
 const blackCover = ref<any>()
 const newChildSelection = ref()
-const gameFnOptions = ref(['hfop', 'gfop', 'gs', 'optest', 'qa'])
+const gameTypeOptions = ref(['hfop', 'gfop', 'gs', 'optest', 'qa'])
 
 const props = defineProps({
     popVisible: {
@@ -109,7 +108,7 @@ const props = defineProps({
                     status: 'finished',
                     order: 1,
                     is_enable: true,
-                    game_fn: [],
+                    game_type: [],
                 }
             ]
         }
@@ -133,6 +132,14 @@ function closePop() {
 
 function handleChange() {
 
+}
+
+function deleteNode(childNode: any) {
+    for (let i in props.popMeta.child) {
+        if (props.popMeta.child[i] == childNode) {
+            props.popMeta.child.splice(i, 1)
+        }
+    }
 }
 
 interface statusEnum {

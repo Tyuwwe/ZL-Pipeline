@@ -1,8 +1,25 @@
 {
-  "name": "vue3-zlpipeline",
-  "version": "0.0.0",
-  "private": true,
+  "name": "zl-pipeline",
+  "version": "1.0.0",
+  "private": false,
   "type": "module",
+  "main": "ZLPipeline-ts.js",
+  "module": "ZLPipeline-ts.umd.cjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "package.json",
+    "README.md",
+    "dist"
+  ],
+  "author": "Tyuwwe",
+  "license": "MIT",
+  "description": "一个线性的的可编辑流水线工具（页面）",
+  "keywords": [
+    "vite",
+    "vue3",
+    "typescript",
+    "pipeline"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -14,6 +31,7 @@
     "@element-plus/icons-vue": "^2.3.1",
     "element-plus": "^2.8.1",
     "file-saver": "^2.0.5",
+    "vite-plugin-dts": "^4.2.2",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
@@ -21,7 +39,7 @@
     "@tsconfig/node20": "^20.1.4",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^20.14.5",
-    "@vitejs/plugin-vue": "^5.0.5",
+    "@vitejs/plugin-vue": "^5.1.4",
     "@vue/tsconfig": "^0.5.1",
     "less": "^4.2.0",
     "npm-run-all2": "^6.2.0",
