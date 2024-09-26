@@ -3,15 +3,18 @@
   "version": "1.0.0",
   "private": false,
   "type": "module",
-  "main": "ZLPipeline-ts.js",
-  "module": "ZLPipeline-ts.umd.cjs",
+  "main": "dist/ZLPipeline-ts.js",
+  "module": "dist/ZLPipeline-ts.umd.cjs",
   "types": "dist/index.d.ts",
   "files": [
     "package.json",
     "README.md",
     "dist"
   ],
-  "author": "Tyuwwe",
+  "author": {
+    "name": "Tyuwwe",
+    "github": "https://github.com/Tyuwwe"
+  },
   "license": "MIT",
   "description": "一个线性的的可编辑流水线工具（页面）",
   "keywords": [
@@ -22,14 +25,13 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "vite build",
+    "build-typecheck-only": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.3.1",
-    "element-plus": "^2.8.1",
     "file-saver": "^2.0.5",
     "vite-plugin-dts": "^4.2.2",
     "vue": "^3.4.29",
@@ -41,6 +43,8 @@
     "@types/node": "^20.14.5",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vue/tsconfig": "^0.5.1",
+    "@element-plus/icons-vue": "^2.3.1",
+    "element-plus": "^2.8.1",
     "less": "^4.2.0",
     "npm-run-all2": "^6.2.0",
     "typescript": "~5.4.0",

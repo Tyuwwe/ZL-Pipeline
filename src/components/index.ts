@@ -1,8 +1,8 @@
 import type { App } from "vue";
-import ZLPipeline from "./ZLPipeline/ZLPipeline.vue";
-import ZLPipelineManege from "./ZLPipeline-Manage/ZLPipelineManege.vue";
-import ZLPipelineNodePop from "./ZL-Pipeline-NodePop/ZLPipeline-NodePop.vue";
-import ZLPipelineStatusPop from "./ZLPipeline-StatusPop/ZLPipeline-StatusPop.vue";
+import ZLPipeline from "./ZLPipeline.vue";
+import ZLPipelineManege from "./ZLPipelineManege.vue";
+import ZLPipelineNodePop from "./ZLPipeline-NodePop.vue";
+import ZLPipelineStatusPop from "./ZLPipeline-StatusPop.vue";
 
 export default {
     install(app: App) {

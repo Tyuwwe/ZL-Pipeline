@@ -44,8 +44,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import ZLPipeline from './components/ZLPipeline/ZLPipeline.vue';
-import ZLPipelineManage from './components/ZLPipeline-Manage/ZLPipelineManege.vue';
+import ZLPipeline from './components/ZLPipeline.vue';
+import ZLPipelineManage from './components/ZLPipelineManege.vue';
 
 const pipelineVis = ref(false)
 const manageVis = ref(false)

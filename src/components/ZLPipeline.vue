@@ -143,11 +143,10 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import ZLPipelineStatusPop from '../ZLPipeline-StatusPop/ZLPipeline-StatusPop.vue';
-import ZLPipelineNodePop from '../ZL-Pipeline-NodePop/ZLPipeline-NodePop.vue';
+import ZLPipelineStatusPop from './ZLPipeline-StatusPop.vue';
+import ZLPipelineNodePop from './ZLPipeline-NodePop.vue';
 import { Message, MessageBox } from '@element-plus/icons-vue';
-import mouseScroll from '@/assets/icon/mouseScroll.svg'
-import type { RefSymbol } from '@vue/reactivity';
+import mouseScroll from '@/assets/mouseScroll.svg'
 import { ElMessage } from 'element-plus';
 
 class inputChildObj {

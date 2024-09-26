@@ -161,8 +161,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import ZLPipelineNodePop from '../ZL-Pipeline-NodePop/ZLPipeline-NodePop.vue';
-import mouseScroll from '@/assets/icon/mouseScroll.svg'
+import ZLPipelineNodePop from './ZLPipeline-NodePop.vue';
+import mouseScroll from '@/assets/mouseScroll.svg'
 import { ElMessage } from 'element-plus';
 import { saveAs } from 'file-saver'
 
