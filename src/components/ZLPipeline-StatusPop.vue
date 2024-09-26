@@ -53,7 +53,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['onClose'])
 
 function closePop() {
     blackCover.value.style.opacity = 0;
@@ -64,7 +64,7 @@ function closePop() {
         blackCover.value.style.opacity = 1;
         popContainer.value.style.opacity = 1;
         popContainer.value.style.transform = "";
-        emit('close')
+        emit('onClose')
     }, 500)
 }
 </script>

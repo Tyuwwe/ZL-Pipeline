@@ -13,9 +13,7 @@
                 <el-form-item label="选择新子节点">
                     <div class="mt-4" style="display: flex; width: 100%;">
                         <el-select style="flex: 1; margin-right: 10px;" v-model="newChildSelection" placeholder="选择新子节点">
-                            <el-option label="自定义-ROX-设置官方维护" value="1" />
-                            <el-option label="自定义-ROX-设置混服维护" value="2" />
-                            <el-option label="自定义-ROX-设置混服维护" value="3" />
+                            <el-option v-for="child in gameChildNodesOptions" :label="child.label" :value="child.value" />
                         </el-select>
                         <el-button type="primary">添加新节点</el-button>
                     </div>
@@ -87,7 +85,21 @@ import { ref } from 'vue';
 const popContainer = ref<any>()
 const blackCover = ref<any>()
 const newChildSelection = ref()
-const gameTypeOptions = ref(['hfop', 'gfop', 'gs', 'optest', 'qa'])
+const gameTypeOptions = ref(['Type1', 'Type2', 'Type3', 'Type4'])
+const gameChildNodesOptions = ref([
+    {
+        label: '子节点1',
+        value: '子节点1'
+    },
+    {
+        label: '子节点2',
+        value: '子节点2'
+    },
+    {
+        label: '子节点3',
+        value: '子节点3'
+    },
+])
 
 const props = defineProps({
     popVisible: {
@@ -97,15 +109,15 @@ const props = defineProps({
     popMeta: {
         type: Object,
         default: {
-            name: '同步版本',
-            description: '本步骤为标准步骤，包含了：1、服务端资源校验；2、客户端资源校验；3、资料片资源校验；4、同步客户端版本到对象存储，5、同步服务端版本到rsync，6、从rsync服务器同步版本到线上服务器的srcfile目录',
-            status: 'finished',
+            name: '',
+            description: '',
+            status: '',
             is_enable: true,
             child: [
                 {
-                    name: '服务端资源校验',
-                    description: 'Sample Desc',
-                    status: 'finished',
+                    name: '',
+                    description: '',
+                    status: '',
                     order: 1,
                     is_enable: true,
                     game_type: [],
@@ -115,7 +127,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['onClose'])
 
 function closePop() {
     blackCover.value.style.opacity = 0;
@@ -126,7 +138,7 @@ function closePop() {
         blackCover.value.style.opacity = 1;
         popContainer.value.style.opacity = 1;
         popContainer.value.style.transform = "";
-        emit('close')
+        emit('onClose')
     }, 500)
 }
 

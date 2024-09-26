@@ -20,7 +20,7 @@ export default defineConfig({
       fileName: "ZLPipeline-ts",
     },
     rollupOptions: {
-      external: ["vue"],
+      external: ["vue", 'elementPlus'],
       output: {
         exports: "named",
         globals: {

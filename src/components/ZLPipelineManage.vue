@@ -155,7 +155,7 @@
             </div>
         </div>
         <input accept=".json" v-show="false" ref="jsonFileInput" type="file" @change="handleFile"/>
-        <ZLPipelineNodePop :popMeta="contextMenuTarget" :pop-visible="popNodeVis" @close="closeNodePop" />
+        <ZLPipelineNodePop :popMeta="contextMenuTarget" :popVisible="popNodeVis" @onClose="closeNodePop" />
     </div>
 </template>
 

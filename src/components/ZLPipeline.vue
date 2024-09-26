@@ -136,8 +136,8 @@
                 <EditPen class="iconSwitchAnim" v-else />
             </el-icon>
         </div>
-        <ZLPipelineStatusPop :popMeta="popMeta" :popStatusList="popStatusList" :pop-visible="popVis" @close="closePop" />
-        <ZLPipelineNodePop :popMeta="contextMenuTarget" :pop-visible="popNodeVis" @close="closeNodePop" />
+        <ZLPipelineStatusPop :popMeta="popMeta" :popStatusList="popStatusList" :popVisible="popVis" @onClose="closePop" />
+        <ZLPipelineNodePop :popMeta="contextMenuTarget" :popVisible="popNodeVis" @onClose="closeNodePop" />
     </div>
 </template>
 
@@ -145,7 +145,7 @@
 import { ref } from 'vue';
 import ZLPipelineStatusPop from './ZLPipeline-StatusPop.vue';
 import ZLPipelineNodePop from './ZLPipeline-NodePop.vue';
-import { Message, MessageBox } from '@element-plus/icons-vue';
+import { MessageBox } from '@element-plus/icons-vue';
 import mouseScroll from '@/assets/mouseScroll.svg'
 import { ElMessage } from 'element-plus';
 
