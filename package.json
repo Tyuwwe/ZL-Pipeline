@@ -1,6 +1,6 @@
 {
   "name": "zl-pipeline",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "private": false,
   "type": "module",
   "main": "dist/ZLPipeline-ts.js",
@@ -23,6 +23,10 @@
     "typescript",
     "pipeline"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Tyuwwe/ZL-Pipeline.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

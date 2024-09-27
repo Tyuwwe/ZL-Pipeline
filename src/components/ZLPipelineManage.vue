@@ -155,7 +155,13 @@
             </div>
         </div>
         <input accept=".json" v-show="false" ref="jsonFileInput" type="file" @change="handleFile"/>
-        <ZLPipelineNodePop :popMeta="contextMenuTarget" :popVisible="popNodeVis" @onClose="closeNodePop" />
+        <ZLPipelineNodePop 
+        :popMeta="contextMenuTarget" 
+        :popVisible="popNodeVis" 
+        :gameTypeOptions="gameTypes" 
+        :gameChildNodesOptions="gameChild"
+        @onClose="closeNodePop" 
+        />
     </div>
 </template>
 
@@ -180,6 +186,7 @@ import {
     Upload,
     Download
 } from '@element-plus/icons-vue';
+import { validateHeaderName } from 'http';
 
 class inputChildObj {
     name: string
@@ -224,6 +231,21 @@ class inputGraphData {
     }
 }
 
+const gameTypes = ['Type1', 'Type2', 'Type3']
+const gameChild = [
+    {
+        label: 'Option1',
+        value: 'Option1'
+    },
+    {
+        label: 'Option2',
+        value: 'Option2'
+    },
+    {
+        label: 'Option3',
+        value: 'Option3'
+    },
+]
 const props = defineProps<{
     pipelineVisible: boolean;
     graphData: inputGraphData[];

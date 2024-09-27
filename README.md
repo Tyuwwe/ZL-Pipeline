@@ -4,6 +4,7 @@
 
 #### A single-line Pipeline component package (Under Development)
 
+<img src="https://img.shields.io/badge/Latest-1.0.9-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/Vue3-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/TypeScript-rgb(21, 59, 115).svg" alt="vue">
 <img src="https://img.shields.io/badge/Pipeline-rgb(21, 119, 115).svg" alt="vue">
@@ -47,12 +48,8 @@ npm i zl-pipeline
 
 All needed dependencies are listed below, these packages will be automatically installed with `zl-pipeline`:
 
-> Note: We are developing version without Element Plus dependency
-
 ```json
 "dependencies": {
-    "@element-plus/icons-vue": "^2.3.1",
-    "element-plus": "^2.8.1",
     "file-saver": "^2.0.5"
 }
 ```
@@ -61,19 +58,24 @@ If you want to develop ZL-Pipeline locally, you need to install devDependencies:
 
 ```json
 "devDependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@tsconfig/node20": "^20.1.4",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^20.14.5",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vue/tsconfig": "^0.5.1",
+    "element-plus": "^2.8.1",
     "less": "^4.2.0",
     "npm-run-all2": "^6.2.0",
     "typescript": "~5.4.0",
-    "vue": "^3.4.29",
+    "unplugin-auto-import": "^0.18.3",
+    "unplugin-icons": "^0.19.3",
+    "unplugin-vue-components": "^0.27.4",
     "vite": "^5.3.1",
     "vite-plugin-dts": "^4.2.2",
-    "vue-tsc": "^2.0.21",
-    "vue-router": "^4.3.3"
+    "vue": "^3.4.29",
+    "vue-router": "^4.3.3",
+    "vue-tsc": "^2.0.21"
 }
 ```
 
@@ -81,29 +83,29 @@ If you want to develop ZL-Pipeline locally, you need to install devDependencies:
 
 ### Import
 
-Both `ZL-Pipeline` and `ElementPlus` have to be imported:
+You can import `ZL-Pipeline` default fonts by import globally using following CSS.
+
+```html
+// Google Fonts
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+
+// Mirror
+<link href="https://fonts.loli.net/css?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+```
+
+Only `ZL-Pipeline` module is necessary, `ElementPlus` does not need to be imported:
 
 ```typescript
 // main.ts
 import './assets/main.css'
 
 import { createApp } from 'vue'
-// Import ElementPlus and ElementPlus CSS
-import ElementPlus from 'element-plus';
-import 'element-plus/dist/index.css';
 // Import ZL-Pipeline CSS
 import 'zl-pipeline/dist/style.css'
 import App from './App.vue'
 
-// Import ElementPlus Icons
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
 const app = createApp(App)
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
-}
 
-app.use(ElementPlus);
 app.mount('#app')
 ```
 
@@ -145,42 +147,74 @@ All of them will receive some certain typed data:
 #### Input:
 
 * **:pipelineVisible** :
-  * Type: Boolean
+  * Type: `Boolean`
   * Desc: Control pipeline display
   * Available: ZLPipeline / ZLPipelineManage
+* **:popVisible** :
+  * Type: `Boolean`
+  * Desc: Control popover display
+  * Available: ZLPipeline-StatusPop / ZLPipelineManage-NodePop
+* **:popMeta** :
+  * Type: `Object<popMetaStatus>`
+  * Desc: Popover metadata for StatusPop
+  * Available: ZLPipeline-StatusPop
+* **:popMeta** :
+  * Type: `inputGraphData`
+  * Desc: Popover metadata for NodePop
+  * Available: ZLPipeline-NodePop
+* **:popStatusList** :
+  * Type: `Object<popStatusList>`
+  * Desc: Popover status data for StatusPop
+  * Available: ZLPipeline-StatusPop
 * **:bShowEditModeButton** :
-  * Type: Boolean
+  * Type: `Boolean`
   * Desc: Control show pipeline edit mode button
   * Available: ZLPipeline
 * **:bAllowEditPopover** :
-  * Type: Boolean
+  * Type: `Boolean`
   * Desc: Control show pipeline edit popover
   * Available: ZLPipeline
 * **:graphData** :
-  * Type: Array\<inputGraphData\>
+  * Type: `Array<inputGraphData>`
   * Desc: Pipeline full data
   * Available: ZLPipeline / ZLPipelineManage
+* **:gameChildNodesOptions** :
+  * Type: `Array<inputChildNodeObj>`
+  * Desc: Edit node popover's child nodes list
+  * Available: ZLPipeline-NodePop
+* **:gameTypeOptions** :
+  * Type: `Array<string>`
+  * Desc: Edit node popover's child nodes game types list
+  * Available: ZLPipeline-NodePop
 
 #### Output (Callback):
 
 * **@onClose** :
-  * Type: Callback
+  * Type: `Callback`
   * Desc: Emit when user click close button
   * Available: All Components
 * **@onChange** :
-  * Type: Callback
+  * Type: `Callback`
   * Desc: Emit when user change any data (need further development)
   * Available: All Components
 * **@onSubmit** :
-  * Type: Callback
+  * Type: `Callback`
   * Desc: Emit when user click any submit button (need further development)
+  * Available: All Components
+* **@onClickOpenNode** :
+  * Type: `Callback`
+  * Desc: Emit when user click any node (need further development)
+  * Available: All Components
+* **@onClickOpenStatus** :
+  * Type: `Callback`
+  * Desc: Emit when user click any node status (need further development)
   * Available: All Components
 
 ### Data Structure
 
 #### inputGraphData
 
-`inputGraphData` is a special data structure defined in ZLPipeline:
+`inputGraphData` is a special data structure defined in ZLPipeline to show Pipeline view:
 
 ```typescript
 [
@@ -203,11 +237,42 @@ All of them will receive some certain typed data:
         }
     },
     {
-        /* Other Nodes */
+        // Other Nodes
     }
 ]
 ```
 
+`popMetaStatus` is a special data structure defined in ZLPipeline-StatusPop metadata:
+
+```typescript
+{
+    title: string
+}
+```
+
+`popStatusList` is a special data structure defined in ZLPipeline-StatusPop to show results:
+
+```typescript
+[
+    {
+        title: string,
+        text: string
+    },
+    {
+        // Other Status
+    }
+]
+```
+
+`inputChildNodeObj` is a special data structure defined in ZLPipeline-StatusPop to define available child node list:
+
+```typescript
+{
+    label: string,
+    value: string
+}
+```
+
 > Author: Tyuwwe
 >
-> Date: 2024/9/26
+> Date: 2024/9/27

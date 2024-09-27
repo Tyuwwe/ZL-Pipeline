@@ -90,21 +90,15 @@ import {
 const popContainer = ref<any>()
 const blackCover = ref<any>()
 const newChildSelection = ref()
-const gameTypeOptions = ref(['Type1', 'Type2', 'Type3', 'Type4'])
-const gameChildNodesOptions = ref([
-    {
-        label: '子节点1',
-        value: '子节点1'
-    },
-    {
-        label: '子节点2',
-        value: '子节点2'
-    },
-    {
-        label: '子节点3',
-        value: '子节点3'
-    },
-])
+
+class inputChildNodeObj {
+    label: string
+    value: string
+    constructor(label: string, value: string) {
+        this.label = label
+        this.value = value
+    }
+}
 
 const props = defineProps({
     popVisible: {
@@ -129,6 +123,12 @@ const props = defineProps({
                 }
             ]
         }
+    },
+    gameChildNodesOptions: {
+        type: Array<inputChildNodeObj>
+    },
+    gameTypeOptions: {
+        type: Array<string>
     }
 })
 

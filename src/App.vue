@@ -23,7 +23,7 @@
       </el-button>
     </div>
     <div class="ZLPipeline-Buttom">
-      Version 1.0.7 (0927) <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
+      Version 1.0.9 (0927) <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
     </div>
   </div>
 
