@@ -7,7 +7,7 @@
         size="large" 
         type="primary" 
         @click="pipelineVis=true"
-        icon="StarFilled"
+        :icon="StarFilled"
         round
       >
         Preview ZL Pipeline
@@ -16,14 +16,14 @@
         size="large" 
         type="success" 
         @click="manageVis=true"
-        icon="Management"
+        :icon="Management"
         round
       >
         Preview ZL Manage
       </el-button>
     </div>
     <div class="ZLPipeline-Buttom">
-      Version 1.0.1 (0926) <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
+      Version 1.0.7 (0927) <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
     </div>
   </div>
 
@@ -46,6 +46,11 @@
 import { ref } from 'vue';
 import ZLPipeline from './components/ZLPipeline.vue';
 import ZLPipelineManage from './components/ZLPipelineManage.vue';
+import { 
+    Management,
+    StarFilled,
+    Promotion
+} from '@element-plus/icons-vue';
 
 const pipelineVis = ref(false)
 const manageVis = ref(false)

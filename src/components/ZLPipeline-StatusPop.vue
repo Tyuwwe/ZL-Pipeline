@@ -19,6 +19,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { 
+    CloseBold,
+    Operation
+} from '@element-plus/icons-vue';
 
 const activeNames = ref([])
 const popContainer = ref<any>()

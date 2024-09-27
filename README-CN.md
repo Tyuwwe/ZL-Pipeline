@@ -30,7 +30,7 @@ ZL-Pipeline 仍然在开发状态，请在生产环境部署前谨慎测试。
 
 *流水线页面*
 
-![overall](./image/edit.png "overall")
+![edit](./image/edit.png "edit")
 
 *节点编辑页面*
 

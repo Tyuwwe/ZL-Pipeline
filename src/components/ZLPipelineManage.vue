@@ -165,6 +165,21 @@ import ZLPipelineNodePop from './ZLPipeline-NodePop.vue';
 import mouseScroll from '@/assets/mouseScroll.svg'
 import { ElMessage } from 'element-plus';
 import { saveAs } from 'file-saver'
+import { 
+    Promotion,
+    CloseBold,
+    CaretRight,
+    CaretLeft,
+    SemiSelect,
+    ZoomIn,
+    ZoomOut,
+    Setting,
+    CircleClose,
+    CircleCheck,
+    EditPen,
+    Upload,
+    Download
+} from '@element-plus/icons-vue';
 
 class inputChildObj {
     name: string

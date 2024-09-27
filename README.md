@@ -29,7 +29,7 @@ ZL-Pipeline is still under-development now, please test carefully before product
 
 *Pipeline View*
 
-![overall](./image/edit.png "overall")
+![edit](./image/edit.png "edit")
 
 *Node Edit View*
 

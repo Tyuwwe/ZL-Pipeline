@@ -64,7 +64,7 @@
                         <el-table-column prop="" label="操作" width="120">
                             <template #default="scope">
                                 <div class="mb-4">
-                                    <el-button type="danger" icon="Delete" style="height: 23px;" @click="deleteNode(scope.row)" round>删除</el-button>
+                                    <el-button type="danger" :icon="Delete" style="height: 23px;" @click="deleteNode(scope.row)" round>删除</el-button>
                                 </div>
                             </template>
                         </el-table-column>
@@ -81,6 +81,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { 
+    CloseBold,
+    Operation,
+    Delete
+} from '@element-plus/icons-vue';
 
 const popContainer = ref<any>()
 const blackCover = ref<any>()
