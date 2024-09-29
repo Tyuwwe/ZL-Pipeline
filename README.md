@@ -4,7 +4,7 @@
 
 #### A single-line Pipeline component package (Under Development)
 
-<img src="https://img.shields.io/badge/Latest-1.0.9-rgb(53,73,94).svg" alt="vue">
+<img src="https://img.shields.io/badge/Latest-1.1.0-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/Vue3-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/TypeScript-rgb(21, 59, 115).svg" alt="vue">
 <img src="https://img.shields.io/badge/Pipeline-rgb(21, 119, 115).svg" alt="vue">
@@ -16,11 +16,11 @@
 
 > Language: [ENGLISH] | [[中文]](./README-CN.md)
 
-ZL-Pipeline is a modern pipeline front-end UI with edit function inspired by **Jenkins Blue Ocean** built with **Element Plus** on **Vue 3** + **TypeScript**.
+**ZL-Pipeline** is a modern pipeline front-end UI with edit function inspired by **Jenkins Blue Ocean** built with **Element Plus** on **Vue 3** + **TypeScript**.
 
-Compared with Jenkins Blue Ocean, ZL-Pipeline is more light-weighted, modernized and flexible.
+Compared with **Jenkins Blue Ocean**, **ZL-Pipeline** is more light-weighted, modernized and flexible.
 
-ZL-Pipeline is still under-development now, please test carefully before production deployment.
+ZL-Pipeline ***is still under-development now***, please test carefully before production deployment.
 
 ## Preview
 
@@ -118,17 +118,39 @@ app.mount('#app')
 </script>
 <template>
     /* Use in template, some variables are hidden */
+    
     <ZLPipeline 
-      :pipelineVisible="pipelineVis"
-      :bShowEditModeButton="false"
-      :bAllowEditPopover="false"
-      :graphData="pipelineData"
-      @onClose="closePipeline"
+    :pipelineVisible="pipelineVis" 
+    :bShowEditModeButton="true" 
+    :bAllowEditPopover="false"
+    :graphData="pipelineData" 
+    :pipelineMeta="pipelineMeta" 
+    @onClose="closePipeline" 
+    @onClickOpenNode="openNodePop"
+    @onClickOpenStatus="openStatusPop"
     />
+
     <ZLPipelineManage 
-      :pipelineVisible="manageVis" 
-      :graphData="pipelineData"
-      @onClose="closeManage"
+    :pipelineVisible="manageVis" 
+    :pipelineMeta="pipelineMeta" 
+    :graphData="pipelineManageData"
+    @onClose="closeManage" 
+    @onClickOpenNode="openNodePop"
+    />
+
+    <ZLPipelineNodePop 
+    :popMeta="nodeMeta" 
+    :popVisible="popNodeVis" 
+    :gameTypeOptions="gameTypes"
+    :gameChildNodesOptions="gameChild" 
+    @onClose="closeNodePop" 
+    />
+    
+    <ZLPipelineStatusPop 
+    :popMeta="popMeta" 
+    :popStatusList="popStatusList" 
+    :popVisible="popVis" 
+    @onClose="closeStatusPop" 
     />
 </template>
 ```
@@ -156,11 +178,11 @@ All of them will receive some certain typed data:
   * Available: ZLPipeline-StatusPop / ZLPipelineManage-NodePop
 * **:popMeta** :
   * Type: `Object<popMetaStatus>`
-  * Desc: Popover metadata for StatusPop
+  * Desc: Popover metadata for StatusPop (e.g. Title)
   * Available: ZLPipeline-StatusPop
 * **:popMeta** :
   * Type: `inputGraphData`
-  * Desc: Popover metadata for NodePop
+  * Desc: Popover metadata for NodePop (e.g. Title)
   * Available: ZLPipeline-NodePop
 * **:popStatusList** :
   * Type: `Object<popStatusList>`
@@ -177,6 +199,10 @@ All of them will receive some certain typed data:
 * **:graphData** :
   * Type: `Array<inputGraphData>`
   * Desc: Pipeline full data
+  * Available: ZLPipeline / ZLPipelineManage
+* **:pipelineMeta** :
+  * Type: `inputPipelineMetaData`
+  * Desc: Pipeline metadata (e.g. Title)
   * Available: ZLPipeline / ZLPipelineManage
 * **:gameChildNodesOptions** :
   * Type: `Array<inputChildNodeObj>`
@@ -203,12 +229,12 @@ All of them will receive some certain typed data:
   * Available: All Components
 * **@onClickOpenNode** :
   * Type: `Callback`
-  * Desc: Emit when user click any node (need further development)
-  * Available: All Components
+  * Desc: Emit when user click any node
+  * Available: ZLPipeline / ZLPipelineManage
 * **@onClickOpenStatus** :
   * Type: `Callback`
-  * Desc: Emit when user click any node status (need further development)
-  * Available: All Components
+  * Desc: Emit when user click any node status
+  * Available: ZLPipeline
 
 ### Data Structure
 

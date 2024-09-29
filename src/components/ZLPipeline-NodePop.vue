@@ -258,6 +258,7 @@ const nodeStatusEnum: statusEnum = {
     z-index: 1100;
     background-color: rgba(50, 50, 50, 0.8);
     top: 0;
+    left: 0;
     // backdrop-filter: blur(20px);
     // -webkit-backdrop-filter: blur(20px);
     transition-duration: 0.5s;

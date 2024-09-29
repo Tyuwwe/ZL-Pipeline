@@ -10,8 +10,8 @@
         <div class="ZLPipeline-Bar">
             <el-icon class="ZLPipeline-Bar-Icon"><Promotion /></el-icon>
             <div class="ZLPipeline-TitleBox">
-                <div class="ZLPipeline-Title">ZL Pipeline Management</div>
-                <div class="ZLPipeline-sTitle">A better pipeline.</div>
+                <div class="ZLPipeline-Title">{{ pipelineMeta.title }}</div>
+                <div class="ZLPipeline-sTitle">{{ pipelineMeta.sTitle }}</div>
             </div>
         </div>
         <div style="overflow-x: auto;" class="ZLPipeline-Graph">
@@ -155,19 +155,11 @@
             </div>
         </div>
         <input accept=".json" v-show="false" ref="jsonFileInput" type="file" @change="handleFile"/>
-        <ZLPipelineNodePop 
-        :popMeta="contextMenuTarget" 
-        :popVisible="popNodeVis" 
-        :gameTypeOptions="gameTypes" 
-        :gameChildNodesOptions="gameChild"
-        @onClose="closeNodePop" 
-        />
     </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import ZLPipelineNodePop from './ZLPipeline-NodePop.vue';
 import mouseScroll from '@/assets/mouseScroll.svg'
 import { ElMessage } from 'element-plus';
 import { saveAs } from 'file-saver'
@@ -186,7 +178,6 @@ import {
     Upload,
     Download
 } from '@element-plus/icons-vue';
-import { validateHeaderName } from 'http';
 
 class inputChildObj {
     name: string
@@ -231,35 +222,29 @@ class inputGraphData {
     }
 }
 
-const gameTypes = ['Type1', 'Type2', 'Type3']
-const gameChild = [
-    {
-        label: 'Option1',
-        value: 'Option1'
-    },
-    {
-        label: 'Option2',
-        value: 'Option2'
-    },
-    {
-        label: 'Option3',
-        value: 'Option3'
-    },
-]
+class inputPipelineMetaData {
+    title: string
+    sTitle: string
+    constructor(t: string, s: string) {
+        this.title = t
+        this.sTitle = s
+    }
+}
 const props = defineProps<{
     pipelineVisible: boolean;
     graphData: inputGraphData[];
+    pipelineMeta: inputPipelineMetaData;
 }>();
-const emit = defineEmits(['onClose', 'onChange', 'onSubmit'])
+const emit = defineEmits(['onClose', 'onChange', 'onSubmit', 'onClickOpenNode'])
 const pipelineContainer = ref<any>()
 const nodesContainer = ref<any>()
 const contextMenu = ref<any>()
 const jsonFileInput = ref<any>()
 const editingControl = ref<any>()
 const scaleSize = ref(1.0)
-const popNodeVis = ref(false)
 const contextVis = ref(false)
 const bEditingMode = ref(false)
+const localGraphData = ref(props.graphData)
 const contextMenuTarget = ref<pipelineDS>({
     name: 'Name',
     description: 'Desc',
@@ -267,9 +252,7 @@ const contextMenuTarget = ref<pipelineDS>({
     is_enable: true,
     child: [],
     result: []
-
 })
-const localGraphData = ref(props.graphData)
 
 interface pipelineDS {
     name: string,
@@ -297,13 +280,8 @@ function openNodePop(node: any = null) {
         return
     }
     if (node.name) contextMenuTarget.value = node
-    popNodeVis.value = true
+    emit('onClickOpenNode', contextMenuTarget.value)
 }
-
-function closeNodePop() {
-    popNodeVis.value = false
-}
-
 function disableNode() {
     contextMenuTarget.value.is_enable = false;
 }

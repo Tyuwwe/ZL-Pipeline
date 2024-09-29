@@ -4,7 +4,7 @@
 
 #### 一个单行流水线组件库（开发中）
 
-<img src="https://img.shields.io/badge/最新版-1.0.9-rgb(53,73,94).svg" alt="vue">
+<img src="https://img.shields.io/badge/最新版-1.1.0-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/Vue3-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/TypeScript-rgb(21, 59, 115).svg" alt="vue">
 <img src="https://img.shields.io/badge/Pipeline-rgb(21, 119, 115).svg" alt="vue">
@@ -16,14 +16,14 @@
 
 > 语言: [[ENGLISH]](./README.md) | [中文]
 
-ZL-Pipeline 是一个现代化的流水线前端组件库，灵感来自于 **Jenkins Blue Ocean** ，使用 **Element Plus** 
+**ZL-Pipeline** 是一个现代化的流水线前端组件库，灵感来自于 **Jenkins Blue Ocean** ，使用 **Element Plus** 
 、 **Vue 3** 以及 **TypeScript** 环境编写。
 
-对比 Jenkins Blue Ocean，ZL-Pipeline 更加轻量化、现代化，也更灵活。
+对比 **Jenkins Blue Ocean**，**ZL-Pipeline** 更加轻量化、现代化，也更灵活。
 
 该项目为公司内部需求定制，如果有特定需求难免无法完美满足要求。
 
-ZL-Pipeline 仍然在开发状态，请在生产环境部署前谨慎测试。
+ZL-Pipeline **仍然在开发状态**，请在生产环境部署前谨慎测试。
 
 ## 预览
 
@@ -120,18 +120,40 @@ app.mount('#app')
     import { ZLPipeline, ZLPipelineManage } from 'zl-pipeline'
 </script>
 <template>
-    /* 在 template 中使用，注意某些变量已被隐藏 */
+    /* 在 template 中使用，部分变量已被隐藏 */
+    
     <ZLPipeline 
-      :pipelineVisible="pipelineVis"
-      :bShowEditModeButton="false"
-      :bAllowEditPopover="false"
-      :graphData="pipelineData"
-      @onClose="closePipeline"
+    :pipelineVisible="pipelineVis" 
+    :bShowEditModeButton="true" 
+    :bAllowEditPopover="false"
+    :graphData="pipelineData" 
+    :pipelineMeta="pipelineMeta" 
+    @onClose="closePipeline" 
+    @onClickOpenNode="openNodePop"
+    @onClickOpenStatus="openStatusPop"
     />
+
     <ZLPipelineManage 
-      :pipelineVisible="manageVis" 
-      :graphData="pipelineData"
-      @onClose="closeManage"
+    :pipelineVisible="manageVis" 
+    :pipelineMeta="pipelineMeta" 
+    :graphData="pipelineManageData"
+    @onClose="closeManage" 
+    @onClickOpenNode="openNodePop"
+    />
+
+    <ZLPipelineNodePop 
+    :popMeta="nodeMeta" 
+    :popVisible="popNodeVis" 
+    :gameTypeOptions="gameTypes"
+    :gameChildNodesOptions="gameChild" 
+    @onClose="closeNodePop" 
+    />
+    
+    <ZLPipelineStatusPop 
+    :popMeta="popMeta" 
+    :popStatusList="popStatusList" 
+    :popVisible="popVis" 
+    @onClose="closeStatusPop" 
     />
 </template>
 ```
@@ -159,11 +181,11 @@ app.mount('#app')
   * 可用组件：ZLPipeline-StatusPop / ZLPipelineManage-NodePop
 * **:popMeta** :
   * 类型：`Object<popMetaStatus>`
-  * 描述：返回结果显示窗口的原始数据
+  * 描述：返回结果显示窗口的原始数据（标题等）
   * 可用组件：ZLPipeline-StatusPop
 * **:popMeta** :
   * 类型：`inputGraphData`
-  * 描述：节点编辑窗口的原始数据
+  * 描述：节点编辑窗口的原始数据（标题等）
   * 可用组件：ZLPipeline-NodePop
 * **:popStatusList** :
   * 类型：`Object<popStatusList>`
@@ -180,6 +202,10 @@ app.mount('#app')
 * **:graphData** :
   * 类型：`Array<inputGraphData>`
   * 描述：流水线的所有数据
+  * 可用组件：ZLPipeline / ZLPipelineManage
+* **:pipelineMeta** :
+  * 类型：`inputPipelineMetaData`
+  * 描述：流水线的元数据（标题等）
   * 可用组件：ZLPipeline / ZLPipelineManage
 * **:gameChildNodesOptions** :
   * 类型：`Array<inputChildNodeObj>`
@@ -206,12 +232,12 @@ app.mount('#app')
   * 可用组件：所有组件
 * **@onClickOpenNode** :
   * 类型：`Callback`
-  * 描述：当用户点击任意节点时触发（仍在开发）
+  * 描述：当用户点击任意节点时触发
   * 可用组件：ZLPipeline / ZLPipelineManage
 * **@onClickOpenStatus** :
   * 类型：`Callback`
-  * 描述：当用户点击任意节点状态时触发（仍在开发）
-  * 可用组件：ZLPipeline / ZLPipelineManage
+  * 描述：当用户点击任意节点状态时触发
+  * 可用组件：ZLPipeline
 
 ### 数据结构
 

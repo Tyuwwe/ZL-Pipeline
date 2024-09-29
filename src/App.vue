@@ -1,52 +1,65 @@
 <template>
-  <div class="center">
-    <el-icon class="ZLPipeline-Title-Icon"><Promotion /></el-icon>
-    <div class="ZLPipeline-Title">ZL Pipeline Component</div>
-    <div>
-      <el-button 
-        size="large" 
-        type="primary" 
-        @click="pipelineVis=true"
-        :icon="StarFilled"
-        round
-      >
-        Preview ZL Pipeline
-      </el-button>
-      <el-button 
-        size="large" 
-        type="success" 
-        @click="manageVis=true"
-        :icon="Management"
-        round
-      >
-        Preview ZL Manage
-      </el-button>
+    <div class="center">
+        <el-icon class="ZLPipeline-Title-Icon">
+            <Promotion />
+        </el-icon>
+        <div class="ZLPipeline-Title">ZL Pipeline Component</div>
+        <div>
+            <el-button size="large" type="primary" @click="pipelineVis = true" :icon="StarFilled" round>
+                Preview ZL Pipeline
+            </el-button>
+            <el-button size="large" type="success" @click="manageVis = true" :icon="Management" round>
+                Preview ZL Manage
+            </el-button>
+        </div>
+        <div class="ZLPipeline-Buttom">
+            Version 1.1.0 (0929)
+            <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
+            <a href="https://www.npmjs.com/package/zl-pipeline">NPM</a>
+        </div>
     </div>
-    <div class="ZLPipeline-Buttom">
-      Version 1.0.9 (0927) <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
-    </div>
-  </div>
 
-  <ZLPipeline 
-    :pipelineVisible="pipelineVis"
-    :bShowEditModeButton="false"
+    <ZLPipeline 
+    :pipelineVisible="pipelineVis" 
+    :bShowEditModeButton="true" 
     :bAllowEditPopover="false"
-    :graphData="pipelineData"
-    @onClose="closePipeline"
-  />
+    :graphData="pipelineData" 
+    :pipelineMeta="pipelineMeta" 
+    @onClose="closePipeline" 
+    @onClickOpenNode="openNodePop"
+    @onClickOpenStatus="openStatusPop"
+    />
 
-  <ZLPipelineManage 
+    <ZLPipelineManage 
     :pipelineVisible="manageVis" 
+    :pipelineMeta="pipelineMeta" 
     :graphData="pipelineManageData"
-    @onClose="closeManage"
-  />
+    @onClose="closeManage" 
+    @onClickOpenNode="openNodePop"
+    />
+
+    <ZLPipelineNodePop 
+    :popMeta="nodeMeta" 
+    :popVisible="popNodeVis" 
+    :gameTypeOptions="gameTypes"
+    :gameChildNodesOptions="gameChild" 
+    @onClose="closeNodePop" 
+    />
+    
+    <ZLPipelineStatusPop 
+    :popMeta="popMeta" 
+    :popStatusList="popStatusList" 
+    :popVisible="popVis" 
+    @onClose="closeStatusPop" 
+    />
+
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import ZLPipeline from './components/ZLPipeline.vue';
 import ZLPipelineManage from './components/ZLPipelineManage.vue';
-import { 
+import {
     Management,
     StarFilled,
     Promotion
@@ -54,14 +67,61 @@ import {
 
 const pipelineVis = ref(false)
 const manageVis = ref(false)
+const popNodeVis = ref(false)
+const popVis = ref(false)
+const nodeMeta = ref<pipelineDS>({
+    name: 'Name',
+    description: 'Desc',
+    status: 'None',
+    is_enable: true,
+    child: [],
+    result: []
+})
+const popMeta = ref({
+    title: ''
+})
+const popStatusList = ref([])
+
+interface pipelineDS {
+    name: string,
+    description: string,
+    status: string,
+    is_enable: boolean,
+    child: object,
+    result: object
+}
 
 function closePipeline() {
-  pipelineVis.value = false
+    pipelineVis.value = false
 }
 
 function closeManage() {
-  manageVis.value = false
+    manageVis.value = false
 }
+
+function openNodePop(popNode: pipelineDS) {
+    nodeMeta.value = popNode
+    popNodeVis.value = true
+}
+
+function openStatusPop(emitData: any) {
+    popMeta.value = emitData.popMeta
+    popStatusList.value = emitData.popStatusList
+    popVis.value = true
+}
+
+function closeNodePop() {
+    popNodeVis.value = false
+}
+
+function closeStatusPop() {
+    popVis.value = false
+}
+
+const pipelineMeta = ref({
+    title: 'Example Pipeline',
+    sTitle: 'Example Pipeline Small Title'
+})
 
 const pipelineData = ref([
     {
@@ -435,51 +495,67 @@ const pipelineManageData = ref([
     },
 ])
 
+const gameTypes = ['Type1', 'Type2', 'Type3']
+const gameChild = [
+    {
+        label: 'Option1',
+        value: 'Option1'
+    },
+    {
+        label: 'Option2',
+        value: 'Option2'
+    },
+    {
+        label: 'Option3',
+        value: 'Option3'
+    },
+]
+
 </script>
 
 <style lang="less" scoped>
 .center {
-  margin: auto;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  height: 400px;
-  background-color: aliceblue;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 20px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans SC', sans-serif;
+    margin: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 400px;
+    background-color: aliceblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 20px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans SC', sans-serif;
 }
 
 .ZLPipeline-Title {
-  margin-bottom: 20px;
-  font-size: 2rem;
-  font-weight: bolder;
-  color: rgb(83, 103, 114);
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bolder;
+    color: rgb(83, 103, 114);
 }
 
 .ZLPipeline-Title-Icon {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  background-color: rgb(207, 216, 227);
-  color: rgb(83, 103, 114);
+    font-size: 2rem;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgb(207, 216, 227);
+    color: rgb(83, 103, 114);
 }
 
 .ZLPipeline-Title-Icon:hover {
-  background-color: rgb(223, 231, 240);
+    background-color: rgb(223, 231, 240);
 }
 
 .ZLPipeline-Buttom {
-  position: absolute;
-  bottom: 10px;
-  font-size: 0.8rem;
-  color: rgb(161, 175, 188);
+    position: absolute;
+    bottom: 10px;
+    font-size: 0.8rem;
+    color: rgb(161, 175, 188);
 }
 </style>

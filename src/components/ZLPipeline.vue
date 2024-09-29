@@ -10,8 +10,8 @@
         <div class="ZLPipeline-Bar">
             <el-icon class="ZLPipeline-Bar-Icon"><Promotion /></el-icon>
             <div class="ZLPipeline-TitleBox">
-                <div class="ZLPipeline-Title">ZL Pipeline Example</div>
-                <div class="ZLPipeline-sTitle">A better pipeline.</div>
+                <div class="ZLPipeline-Title">{{ pipelineMeta.title }}</div>
+                <div class="ZLPipeline-sTitle">{{ pipelineMeta.sTitle }}</div>
             </div>
         </div>
         <div style="overflow-x: auto;" class="ZLPipeline-Graph">
@@ -136,20 +136,12 @@
                 <EditPen class="iconSwitchAnim" v-else />
             </el-icon>
         </div>
-        <ZLPipelineStatusPop :popMeta="popMeta" :popStatusList="popStatusList" :popVisible="popVis" @onClose="closePop" />
-        <ZLPipelineNodePop 
-        :popMeta="contextMenuTarget" 
-        :popVisible="popNodeVis" 
-        :gameTypeOptions="gameTypes" 
-        :gameChildNodesOptions="gameChild"
-        @onClose="closeNodePop" 
-        />    </div>
+        </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import ZLPipelineStatusPop from './ZLPipeline-StatusPop.vue';
-import ZLPipelineNodePop from './ZLPipeline-NodePop.vue';
 import { MessageBox } from '@element-plus/icons-vue';
 import mouseScroll from '@/assets/mouseScroll.svg'
 import { ElMessage } from 'element-plus';
@@ -210,35 +202,28 @@ class inputGraphData {
     }
 }
 
-const gameTypes = ['Type1', 'Type2', 'Type3']
-const gameChild = [
-    {
-        label: 'Option1',
-        value: 'Option1'
-    },
-    {
-        label: 'Option2',
-        value: 'Option2'
-    },
-    {
-        label: 'Option3',
-        value: 'Option3'
-    },
-]
+class inputPipelineMetaData {
+    title: string
+    sTitle: string
+    constructor(t: string, s: string) {
+        this.title = t
+        this.sTitle = s
+    }
+}
+
 const props = defineProps<{
     pipelineVisible: boolean;
     bShowEditModeButton: boolean;
     bAllowEditPopover: boolean;
     graphData: inputGraphData[];
+    pipelineMeta: inputPipelineMetaData;
 }>();
-const emit = defineEmits(['onClose', 'onChange', 'onSubmit'])
+const emit = defineEmits(['onClose', 'onChange', 'onSubmit', 'onClickOpenNode', 'onClickOpenStatus'])
 const pipelineContainer = ref<any>()
 const nodesContainer = ref<any>()
 const contextMenu = ref<any>()
 const editingControl = ref<any>()
 const scaleSize = ref(1.0)
-const popVis = ref(false)
-const popNodeVis = ref(false)
 const contextVis = ref(false)
 const bEditingMode = ref(false)
 const popStatusList = ref([])
@@ -276,34 +261,25 @@ const scaleGraph = (scale: number) => {
 }
 
 function openPop(node: any = null) {
-    if (bEditingMode.value) {
-        console.log(node)
-        node.target.style.marginRight = "200px"
-        return
-    }
     if (node.name) {
         popMeta.value.title = node.name
         popStatusList.value = node.result ? node.result : []
     }
-    popVis.value = true
-}
-
-function closePop() {
-    popVis.value = false
+    const emitData = {
+        popMeta: popMeta.value,
+        popStatusList: popStatusList.value,
+    }
+    emit('onClickOpenStatus', emitData)
 }
 
 function openNodePop(node: any = null) {
-    if (!props.bAllowEditPopover) return
+    if (props.bAllowEditPopover == false) return
     if (bEditingMode.value) {
         ElMessage('当前为编辑模式，无法使用此操作')
         return
     }
     if (node.name) contextMenuTarget.value = node
-    popNodeVis.value = true
-}
-
-function closeNodePop() {
-    popNodeVis.value = false
+    emit('onClickOpenNode', contextMenuTarget.value)
 }
 
 function disableNode() {
