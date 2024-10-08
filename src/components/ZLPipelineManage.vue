@@ -18,8 +18,8 @@
             <div ref="nodesContainer" class="ZLPipeline-Nodes">
                 <div class="ZLPipeline-Node">
                     <div @click="addNode('start')" class="ZLPipeline-Node-Top ZLPipeline-Node-Top-SE">
-                        <div class="ZLPipeline-Node-Name">开始 <el-icon><CaretRight /></el-icon></div>
-                        <div class="ZLPipeline-Node-Desc">Start</div>
+                        <div class="ZLPipeline-Node-Name">{{ $t('pl.node_start') }} <el-icon><CaretRight /></el-icon></div>
+                        <div class="ZLPipeline-Node-Desc">{{ $t('pl.node_start_s') }}</div>
                     </div>
                 </div>
                 <div 
@@ -29,7 +29,7 @@
                     @contextmenu.prevent.stop="openContextMenu($event, node)"
                 >     
                     <div v-if="bEditingMode" class="ZLPipeline-Node-Top Node-Editing" @click="addNode(node)">
-                        <div class="ZLPipeline-Node-Status">编辑中</div>
+                        <div class="ZLPipeline-Node-Status">{{ $t('pl.node_status_editing') }}</div>
                         <div v-if="node.name.length <= 7" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else-if="node.name.length <= 9" style="font-size: 1.25rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else style="font-size: 1rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
@@ -37,13 +37,13 @@
 
                     </div>
                     <div v-else-if="node.is_enable" class="ZLPipeline-Node-Top Node-Manage" @click="openNodePop(node)">
-                        <div class="ZLPipeline-Node-Status">普通节点</div>
+                        <div class="ZLPipeline-Node-Status">{{ $t('pl.node_normal') }}</div>
                         <div v-if="node.name.length <= 7" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else-if="node.name.length <= 9" style="font-size: 1.25rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else style="font-size: 1rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <el-popover
                             placement="top"
-                            title="备注"
+                            :title="$t('pl.node_desc')"
                             :width="200"
                             trigger="hover"
                             :content="node.description"
@@ -56,13 +56,13 @@
                         </el-popover>
                     </div>
                     <div v-else class="ZLPipeline-Node-Top Node-Disabled">
-                        <div class="ZLPipeline-Node-Status">已禁用节点</div>
+                        <div class="ZLPipeline-Node-Status">{{ $t('pl.node_disabled') }}</div>
                         <div v-if="node.name.length <= 7" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else-if="node.name.length <= 9" style="font-size: 1.25rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else style="font-size: 1rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <el-popover
                             placement="top"
-                            title="备注"
+                            :title="$t('pl.node_desc')"
                             :width="200"
                             trigger="hover"
                             :content="node.description"
@@ -106,21 +106,21 @@
                 </div>
                 <div class="ZLPipeline-Node">
                     <div class="ZLPipeline-Node-Top ZLPipeline-Node-Top-SE">
-                        <div class="ZLPipeline-Node-Name"><el-icon><CaretLeft /></el-icon> 结束</div>
-                        <div class="ZLPipeline-Node-Desc">End</div>
+                        <div class="ZLPipeline-Node-Name"><el-icon><CaretLeft /></el-icon> {{ $t('pl.node_end') }}</div>
+                        <div class="ZLPipeline-Node-Desc">{{ $t('pl.node_endt_s') }}</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="ZLPipeline-Display">
             <el-icon @click="scaleGraph(1)" class="ZLPipeline-Zoom-Icons"><ZoomIn /></el-icon>
-            放大倍率：{{ scaleSize.toFixed(2) }}x
+            {{ $t('pl.graph_scale') }}{{ scaleSize.toFixed(2) }}x
             <el-icon @click="scaleGraph(-1)" class="ZLPipeline-Zoom-Icons"><ZoomOut /></el-icon>
         </div>
-        <div class="ZLPipeline-Tips">使用 <span class="ZLPipeline-Key">Shift</span> + <img class="hintIcon" :src="mouseScroll" alt="scroll-svg" /> 横向滚动</div>
+        <div class="ZLPipeline-Tips">{{ $t('pl.graph_hint_1') }} <span class="ZLPipeline-Key">Shift</span> + <img class="hintIcon" :src="mouseScroll" alt="scroll-svg" /> {{ $t('pl.graph_hint_2') }}</div>
         <div v-show="contextVis" ref="contextMenu" class="ZLPipeline-ContextMenu">
             <div class="ZLPipeline-ContextMenu-Title">
-                <div class="ZLPipeline-ContextMenu-Title-Text">当前节点</div>
+                <div class="ZLPipeline-ContextMenu-Title-Text">{{ $t('pl.node_contextmenu_current') }}</div>
                 <div class="ZLPipeline-ContextMenu-Title-Node">{{ contextMenuTarget.name }}</div>
             </div>
             <div class="ZLPipeline-ContextMenu-Item" @click="openNodePop"><el-icon class="ContextIcon"><Setting /></el-icon>节点设置</div>
@@ -128,8 +128,8 @@
             <div v-show="!contextMenuTarget.is_enable" @click="enableNode" class="ZLPipeline-ContextMenu-Item"><el-icon class="ContextIcon"><CircleCheck /></el-icon>启用此节点</div>
         </div>
         <div @click="switchEditingMode" ref="editingControl" class="ZLPipeline-EditingControl">
-            <div class="EditingControlText" v-if="bEditingMode" style="color: white;" >退出编辑模式</div>
-            <div class="EditingControlText" v-else >进入编辑模式</div>
+            <div class="EditingControlText" v-if="bEditingMode" style="color: white;" >{{ $t('pl.node_editmode_exit') }}</div>
+            <div class="EditingControlText" v-else >{{ $t('pl.node_editmode_enter') }}</div>
             <el-icon class="EditingControlIcon">
                 <CircleClose class="iconSwitchAnim" v-if="bEditingMode" />
                 <EditPen class="iconSwitchAnim" v-else />
@@ -140,17 +140,17 @@
                 <el-tooltip
                     class="box-item"
                     effect="dark"
-                    content="导入JSON文件会覆盖当前Pipeline"
+                    :content="$t('msg.json_import')"
                     placement="top"
                 >
                     <el-button @click="importJson()" class="manageControlBtn" type="warning" plain round>
                         <el-icon class="btnIcon"><Upload /></el-icon>
-                        <div class="btnText">导入JSON</div>
+                        <div class="btnText">{{ $t('pl.json_import') }}</div>
                     </el-button>
                 </el-tooltip>
                 <el-button @click="saveAsJson()" class="manageControlBtn" type="success" plain round>
                     <el-icon class="btnIcon"><Download /></el-icon>
-                    <div class="btnText">导出JSON</div>
+                    <div class="btnText">{{ $t('pl.json_export') }}</div>
                 </el-button>
             </div>
         </div>
@@ -159,10 +159,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import mouseScroll from '@/assets/mouseScroll.svg'
+import { onMounted, ref } from 'vue';
+import mouseScroll from '@/assets/mouseScroll.svg';
 import { ElMessage } from 'element-plus';
-import { saveAs } from 'file-saver'
+import { saveAs } from 'file-saver';
+import { useI18n } from "vue-i18n";
 import { 
     Promotion,
     CloseBold,
@@ -178,6 +179,8 @@ import {
     Upload,
     Download
 } from '@element-plus/icons-vue';
+
+const i18n = useI18n()
 
 class inputChildObj {
     name: string
@@ -232,6 +235,7 @@ class inputPipelineMetaData {
 }
 const props = defineProps<{
     pipelineVisible: boolean;
+    lang: string;
     graphData: inputGraphData[];
     pipelineMeta: inputPipelineMetaData;
 }>();
@@ -276,7 +280,7 @@ const scaleGraph = (scale: number) => {
 
 function openNodePop(node: any = null) {
     if (bEditingMode.value) {
-        ElMessage('当前为编辑模式，无法使用此操作')
+        ElMessage(i18n.t('msg.now_editing'))
         return
     }
     if (node.name) contextMenuTarget.value = node
@@ -313,7 +317,7 @@ function handleFile(event: any) {
 
 const openContextMenu = (e: MouseEvent, node: any) => {
     if (bEditingMode.value) {
-        ElMessage('当前为编辑模式，无法使用此操作')
+        ElMessage(i18n.t('msg.now_editing'))
         return
     }
     contextVis.value = true
@@ -348,11 +352,11 @@ function closePipelineGraph() {
 function switchEditingMode() {
     if (bEditingMode.value) {
         editingControl.value.style.backgroundColor = ""
-        ElMessage('已退出编辑模式')
+        ElMessage(i18n.t('msg.exit_editing'))
     }
     else {
         editingControl.value.style.backgroundColor = "darkred"
-        ElMessage('已进入编辑模式')
+        ElMessage(i18n.t('msg.enter_editing'))
     }
     bEditingMode.value = !bEditingMode.value 
 }
@@ -361,8 +365,8 @@ function addNode(targetNode: any) {
     if (!bEditingMode.value) return
     if (targetNode == 'start') {
         const newNode = {
-            name: '节点' + (Math.random() * 10000).toFixed(0),
-            description: '描述',
+            name: i18n.t('pl.node_new') + (Math.random() * 10000).toFixed(0),
+            description: i18n.t('pl.node_new_desc'),
             status: 'finished',
             is_enable: true,
             child: [],
@@ -374,8 +378,8 @@ function addNode(targetNode: any) {
     for (let i = 0; i < localGraphData.value.length; ++i) {
         if (localGraphData.value[i] == targetNode) {
             const newNode = {
-                name: '节点' + (Math.random() * 10000).toFixed(0),
-                description: '描述',
+                name: i18n.t('pl.node_new') + (Math.random() * 10000).toFixed(0),
+                description: i18n.t('pl.node_new_desc'),
                 status: 'finished',
                 is_enable: true,
                 child: [],
@@ -395,6 +399,21 @@ function deletePop(targetNode: any) {
         }
     }
 }
+
+onMounted(() => {
+    let localLang = localStorage.getItem('language') || 'zhCN'
+    let localLangList = ['zhCN', 'enUS']
+    if (!(localLang && localLang == props.lang)) {
+        if (localLangList.includes(localLang)) {
+            localStorage.setItem('language', props.lang)
+            i18n.locale.value = props.lang
+        }
+        else {
+            localStorage.setItem('language','zhCN')
+            i18n.locale.value = 'zhCN'
+        }
+    }
+})
 
 </script>
 
@@ -475,34 +494,41 @@ function deletePop(targetNode: any) {
     display: flex;
 }
 
+.manageControlsBtns {
+    width: 300px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: end;
+    justify-content: end;
+}
+
 .manageControlBtn {
     height: 40px;
     overflow: hidden;
     transition-duration: .4s;
-    width: 40px;
+    width: 80px;
 }
 
 .btnText {
-    opacity: 0;
     transition-duration: .1s;
+    display: none;
 }
 
 .btnIcon {
-    margin-right: -1rem;
-    transform: translateX(25px);
+    display: block;
     transition-duration: .1s;
 }
 
 .manageControlBtn:hover {
-    width: 100px;
+    width: 150px;
 }
 
 .manageControlBtn:hover .btnText {
-    opacity: 1;
+    display: block;
 }
 
 .manageControlBtn:hover .btnIcon {
-    opacity: 0;
+    display: block;
 }
 
 .ZLPipeline-Container:has(.ZLPipeline-Control:hover) {

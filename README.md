@@ -4,7 +4,7 @@
 
 #### A single-line Pipeline component package (Under Development)
 
-<img src="https://img.shields.io/badge/Latest-1.1.0-rgb(53,73,94).svg" alt="vue">
+<img src="https://img.shields.io/badge/Latest-1.1.1-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/Vue3-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/TypeScript-rgb(21, 59, 115).svg" alt="vue">
 <img src="https://img.shields.io/badge/Pipeline-rgb(21, 119, 115).svg" alt="vue">
@@ -16,6 +16,8 @@
 
 > Language: [ENGLISH] | [[中文]](./README-CN.md)
 
+> ZL-Pipeline supports English (enUS) and 简体中文（zhCN）
+
 **ZL-Pipeline** is a modern pipeline front-end UI with edit function inspired by **Jenkins Blue Ocean** built with **Element Plus** on **Vue 3** + **TypeScript**.
 
 Compared with **Jenkins Blue Ocean**, **ZL-Pipeline** is more light-weighted, modernized and flexible.
@@ -23,8 +25,6 @@ Compared with **Jenkins Blue Ocean**, **ZL-Pipeline** is more light-weighted, mo
 ZL-Pipeline ***is still under-development now***, please test carefully before production deployment.
 
 ## Preview
-
-> Note that muti-language support will be available in future releases (Only zh-CN available now).
 
 ![overall](./image/overall.png "overall")
 
@@ -54,7 +54,7 @@ All needed dependencies are listed below, these packages will be automatically i
 }
 ```
 
-If you want to develop ZL-Pipeline locally, you need to install devDependencies:
+If you want to develop ZL-Pipeline locally, you need to install these devDependencies:
 
 ```json
 "devDependencies": {
@@ -74,6 +74,7 @@ If you want to develop ZL-Pipeline locally, you need to install devDependencies:
     "vite": "^5.3.1",
     "vite-plugin-dts": "^4.2.2",
     "vue": "^3.4.29",
+    "vue-i18n": "^10.0.4",
     "vue-router": "^4.3.3",
     "vue-tsc": "^2.0.21"
 }
@@ -84,6 +85,8 @@ If you want to develop ZL-Pipeline locally, you need to install devDependencies:
 ### Import
 
 You can import `ZL-Pipeline` default fonts by import globally using following CSS.
+
+> For Apple users, ZL-Pipeline will use `-apple-system` font by default
 
 ```html
 // Google Fonts
@@ -124,7 +127,8 @@ app.mount('#app')
     :bShowEditModeButton="true" 
     :bAllowEditPopover="false"
     :graphData="pipelineData" 
-    :pipelineMeta="pipelineMeta" 
+    :pipelineMeta="pipelineMeta"
+    lang="enUS"
     @onClose="closePipeline" 
     @onClickOpenNode="openNodePop"
     @onClickOpenStatus="openStatusPop"
@@ -134,6 +138,7 @@ app.mount('#app')
     :pipelineVisible="manageVis" 
     :pipelineMeta="pipelineMeta" 
     :graphData="pipelineManageData"
+    lang="enUS"
     @onClose="closeManage" 
     @onClickOpenNode="openNodePop"
     />
@@ -143,6 +148,7 @@ app.mount('#app')
     :popVisible="popNodeVis" 
     :gameTypeOptions="gameTypes"
     :gameChildNodesOptions="gameChild" 
+    lang="enUS"
     @onClose="closeNodePop" 
     />
     
@@ -212,6 +218,10 @@ All of them will receive some certain typed data:
   * Type: `Array<string>`
   * Desc: Edit node popover's child nodes game types list
   * Available: ZLPipeline-NodePop
+* **lang** :
+  * Type: `String`
+  * Desc: Language selection (Now support zhCN and enUS)
+  * Available: All Except ZLPipeline-NodePop
 
 #### Output (Callback):
 
@@ -301,4 +311,4 @@ All of them will receive some certain typed data:
 
 > Author: Tyuwwe
 >
-> Date: 2024/9/27
+> Date: 2024/10/8

@@ -4,7 +4,7 @@
 
 #### 一个单行流水线组件库（开发中）
 
-<img src="https://img.shields.io/badge/最新版-1.1.0-rgb(53,73,94).svg" alt="vue">
+<img src="https://img.shields.io/badge/最新版-1.1.1-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/Vue3-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/TypeScript-rgb(21, 59, 115).svg" alt="vue">
 <img src="https://img.shields.io/badge/Pipeline-rgb(21, 119, 115).svg" alt="vue">
@@ -16,6 +16,8 @@
 
 > 语言: [[ENGLISH]](./README.md) | [中文]
 
+> ZL-Pipeline 支持 English (enUS) 和 简体中文（zhCN）
+
 **ZL-Pipeline** 是一个现代化的流水线前端组件库，灵感来自于 **Jenkins Blue Ocean** ，使用 **Element Plus** 
 、 **Vue 3** 以及 **TypeScript** 环境编写。
 
@@ -23,11 +25,9 @@
 
 该项目为公司内部需求定制，如果有特定需求难免无法完美满足要求。
 
-ZL-Pipeline **仍然在开发状态**，请在生产环境部署前谨慎测试。
+ZL-Pipeline ***仍然在开发状态***，请在生产环境部署前谨慎测试。
 
 ## 预览
-
-> 请注意：多语言支持将会在未来的版本提供（现在仅支持中文）
 
 ![overall](./image/overall.png "overall")
 
@@ -77,6 +77,7 @@ npm i zl-pipeline
     "vite": "^5.3.1",
     "vite-plugin-dts": "^4.2.2",
     "vue": "^3.4.29",
+    "vue-i18n": "^10.0.4",
     "vue-router": "^4.3.3",
     "vue-tsc": "^2.0.21"
 }
@@ -87,6 +88,8 @@ npm i zl-pipeline
 ### 导入
 
 如果需要使用 ZL-Pipeline 默认使用的字体（Noto Sans），可以在项目的 `index.html` 页面全局引入 Noto Sans。
+
+> 对于 Apple 用户，ZL-Pipeline 将默认使用 `-apple-system` 字体
 
 ```html
 // Google Fonts
@@ -128,6 +131,7 @@ app.mount('#app')
     :bAllowEditPopover="false"
     :graphData="pipelineData" 
     :pipelineMeta="pipelineMeta" 
+    lang="zhCN"
     @onClose="closePipeline" 
     @onClickOpenNode="openNodePop"
     @onClickOpenStatus="openStatusPop"
@@ -137,6 +141,7 @@ app.mount('#app')
     :pipelineVisible="manageVis" 
     :pipelineMeta="pipelineMeta" 
     :graphData="pipelineManageData"
+    lang="zhCN"
     @onClose="closeManage" 
     @onClickOpenNode="openNodePop"
     />
@@ -146,6 +151,7 @@ app.mount('#app')
     :popVisible="popNodeVis" 
     :gameTypeOptions="gameTypes"
     :gameChildNodesOptions="gameChild" 
+    lang="zhCN"
     @onClose="closeNodePop" 
     />
     
@@ -215,6 +221,10 @@ app.mount('#app')
   * 类型：`Array<string>`
   * 描述：编辑节点页面的子节点内可选功能选项列表
   * 可用组件：ZLPipeline-NodePop
+* **lang** :
+  * 类型：`String`
+  * 描述：字体选择 （目前支持 zhCN 和 enUS）
+  * 可用组件：除 ZLPipeline-NodePop 之外的所有组件
 
 #### 输出（回调函数）：
 
@@ -304,4 +314,4 @@ app.mount('#app')
 
 > 作者: Tyuwwe
 >
-> 日期: 2024/9/27
+> 日期: 2024/10/8

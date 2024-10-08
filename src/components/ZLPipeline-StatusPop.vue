@@ -3,14 +3,14 @@
     <div ref="popContainer" v-show="popVisible" class="ZLPipeline-Pop-Container">
         <div class="ZLPipeline-popControls" @click="closePop"><el-icon><CloseBold /></el-icon></div>
         <div class="ZLPipeline-Pop-Bar">
-            <div class="ZLPipeline-Pop-Bar-Title"><el-icon style="margin-right: 10px;"><Operation /></el-icon>{{ popMeta.title }} 的执行结果</div>
+            <div class="ZLPipeline-Pop-Bar-Title"><el-icon style="margin-right: 10px;"><Operation /></el-icon>{{ popMeta.title }} {{ $t('sp.exec_result') }}</div>
         </div>
         <div class="ZLPipeline-Pop-Content">
             <el-collapse style="padding-bottom: 50px;" v-model="activeNames" @change="handleChange">
                 <el-collapse-item v-for="data in popStatusList" :title="data.title" :name="data.title">
                     <div style="white-space: pre">{{ data.text }}</div>
                 </el-collapse-item>
-                <el-collapse-item v-show="popStatusList.length == 0" title="无返回结果" name="1">
+                <el-collapse-item v-show="popStatusList.length == 0" :title="$t('sp.no_item')" name="1">
                 </el-collapse-item>
             </el-collapse>
         </div>
@@ -18,7 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useI18n } from "vue-i18n";
 import { 
     CloseBold,
     Operation
@@ -28,8 +29,10 @@ const activeNames = ref([])
 const popContainer = ref<any>()
 const blackCover = ref<any>()
 const handleChange = (val: string[]) => {
-  console.log(val)
+  return
 }
+
+const i18n = useI18n()
 
 interface popArr {
     title: String
@@ -54,6 +57,25 @@ const props = defineProps({
                 text: ''
             }
         ]
+    },
+    lang: {
+        type: String,
+        default: 'zhCN'
+    }
+})
+
+onMounted(() => {
+    let localLang = localStorage.getItem('language') || 'zhCN'
+    let localLangList = ['zhCN', 'enUS']
+    if (!(localLang && localLang == props.lang)) {
+        if (localLangList.includes(localLang)) {
+            localStorage.setItem('language', props.lang)
+            i18n.locale.value = props.lang
+        }
+        else {
+            localStorage.setItem('language','zhCN')
+            i18n.locale.value = 'zhCN'
+        }
     }
 })
 

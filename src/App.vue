@@ -21,10 +21,11 @@
 
     <ZLPipeline 
     :pipelineVisible="pipelineVis" 
-    :bShowEditModeButton="true" 
+    :bShowEditModeButton="false" 
     :bAllowEditPopover="false"
     :graphData="pipelineData" 
-    :pipelineMeta="pipelineMeta" 
+    :pipelineMeta="pipelineMeta"
+    lang="enUS"
     @onClose="closePipeline" 
     @onClickOpenNode="openNodePop"
     @onClickOpenStatus="openStatusPop"
@@ -34,6 +35,7 @@
     :pipelineVisible="manageVis" 
     :pipelineMeta="pipelineMeta" 
     :graphData="pipelineManageData"
+    lang="enUS"
     @onClose="closeManage" 
     @onClickOpenNode="openNodePop"
     />
@@ -50,6 +52,7 @@
     :popMeta="popMeta" 
     :popStatusList="popStatusList" 
     :popVisible="popVis" 
+    lang="enUS"
     @onClose="closeStatusPop" 
     />
 
