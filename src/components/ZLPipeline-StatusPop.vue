@@ -3,14 +3,14 @@
     <div ref="popContainer" v-show="popVisible" class="ZLPipeline-Pop-Container">
         <div class="ZLPipeline-popControls" @click="closePop"><el-icon><CloseBold /></el-icon></div>
         <div class="ZLPipeline-Pop-Bar">
-            <div class="ZLPipeline-Pop-Bar-Title"><el-icon style="margin-right: 10px;"><Operation /></el-icon>{{ popMeta.title }} {{ $t('sp.exec_result') }}</div>
+            <div class="ZLPipeline-Pop-Bar-Title"><el-icon style="margin-right: 10px;"><Operation /></el-icon>{{ popMeta.title }} {{ langPack.sp.exec_result }}</div>
         </div>
         <div class="ZLPipeline-Pop-Content">
             <el-collapse style="padding-bottom: 50px;" v-model="activeNames" @change="handleChange">
                 <el-collapse-item v-for="data in popStatusList" :title="data.title" :name="data.title">
                     <div style="white-space: pre">{{ data.text }}</div>
                 </el-collapse-item>
-                <el-collapse-item v-show="popStatusList.length == 0" :title="$t('sp.no_item')" name="1">
+                <el-collapse-item v-show="popStatusList.length == 0" :title="langPack.sp.no_item" name="1">
                 </el-collapse-item>
             </el-collapse>
         </div>
@@ -18,8 +18,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useI18n } from "vue-i18n";
+import { ref } from 'vue';
+import enUS from '@/locales/enUS';
+import zhCN from '@/locales/zhCN';
 import { 
     CloseBold,
     Operation
@@ -31,8 +32,6 @@ const blackCover = ref<any>()
 const handleChange = (val: string[]) => {
   return
 }
-
-const i18n = useI18n()
 
 interface popArr {
     title: String
@@ -64,20 +63,15 @@ const props = defineProps({
     }
 })
 
-onMounted(() => {
-    let localLang = localStorage.getItem('language') || 'zhCN'
-    let localLangList = ['zhCN', 'enUS']
-    if (!(localLang && localLang == props.lang)) {
-        if (localLangList.includes(localLang)) {
-            localStorage.setItem('language', props.lang)
-            i18n.locale.value = props.lang
-        }
-        else {
-            localStorage.setItem('language','zhCN')
-            i18n.locale.value = 'zhCN'
-        }
-    }
-})
+const langPack = ref(zhCN)
+
+let localLangList = ['zhCN', 'enUS']
+if (localLangList.includes(props.lang)) {
+    langPack.value = (props.lang == 'zhCN')? zhCN : enUS
+}
+else {
+    langPack.value = zhCN
+}
 
 const emit = defineEmits(['onClose'])
 

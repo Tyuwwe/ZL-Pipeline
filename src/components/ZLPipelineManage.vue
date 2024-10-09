@@ -18,8 +18,8 @@
             <div ref="nodesContainer" class="ZLPipeline-Nodes">
                 <div class="ZLPipeline-Node">
                     <div @click="addNode('start')" class="ZLPipeline-Node-Top ZLPipeline-Node-Top-SE">
-                        <div class="ZLPipeline-Node-Name">{{ $t('pl.node_start') }} <el-icon><CaretRight /></el-icon></div>
-                        <div class="ZLPipeline-Node-Desc">{{ $t('pl.node_start_s') }}</div>
+                        <div class="ZLPipeline-Node-Name">{{ langPack.pl.node_start }} <el-icon><CaretRight /></el-icon></div>
+                        <div class="ZLPipeline-Node-Desc">{{ langPack.pl.node_start_s }}</div>
                     </div>
                 </div>
                 <div 
@@ -29,7 +29,7 @@
                     @contextmenu.prevent.stop="openContextMenu($event, node)"
                 >     
                     <div v-if="bEditingMode" class="ZLPipeline-Node-Top Node-Editing" @click="addNode(node)">
-                        <div class="ZLPipeline-Node-Status">{{ $t('pl.node_status_editing') }}</div>
+                        <div class="ZLPipeline-Node-Status">{{ langPack.pl.node_status_editing }}</div>
                         <div v-if="node.name.length <= 7" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else-if="node.name.length <= 9" style="font-size: 1.25rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else style="font-size: 1rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
@@ -37,13 +37,13 @@
 
                     </div>
                     <div v-else-if="node.is_enable" class="ZLPipeline-Node-Top Node-Manage" @click="openNodePop(node)">
-                        <div class="ZLPipeline-Node-Status">{{ $t('pl.node_normal') }}</div>
+                        <div class="ZLPipeline-Node-Status">{{ langPack.pl.node_normal }}</div>
                         <div v-if="node.name.length <= 7" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else-if="node.name.length <= 9" style="font-size: 1.25rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else style="font-size: 1rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <el-popover
                             placement="top"
-                            :title="$t('pl.node_desc')"
+                            :title="langPack.pl.node_desc"
                             :width="200"
                             trigger="hover"
                             :content="node.description"
@@ -56,13 +56,13 @@
                         </el-popover>
                     </div>
                     <div v-else class="ZLPipeline-Node-Top Node-Disabled">
-                        <div class="ZLPipeline-Node-Status">{{ $t('pl.node_disabled') }}</div>
+                        <div class="ZLPipeline-Node-Status">{{ langPack.pl.node_disabled }}</div>
                         <div v-if="node.name.length <= 7" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else-if="node.name.length <= 9" style="font-size: 1.25rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <div v-else style="font-size: 1rem;" class="ZLPipeline-Node-Name">{{ node.name }}</div>
                         <el-popover
                             placement="top"
-                            :title="$t('pl.node_desc')"
+                            :title="langPack.pl.node_desc"
                             :width="200"
                             trigger="hover"
                             :content="node.description"
@@ -106,21 +106,21 @@
                 </div>
                 <div class="ZLPipeline-Node">
                     <div class="ZLPipeline-Node-Top ZLPipeline-Node-Top-SE">
-                        <div class="ZLPipeline-Node-Name"><el-icon><CaretLeft /></el-icon> {{ $t('pl.node_end') }}</div>
-                        <div class="ZLPipeline-Node-Desc">{{ $t('pl.node_endt_s') }}</div>
+                        <div class="ZLPipeline-Node-Name"><el-icon><CaretLeft /></el-icon> {{ langPack.pl.node_end }}</div>
+                        <div class="ZLPipeline-Node-Desc">{{ langPack.pl.node_endt_s }}</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="ZLPipeline-Display">
             <el-icon @click="scaleGraph(1)" class="ZLPipeline-Zoom-Icons"><ZoomIn /></el-icon>
-            {{ $t('pl.graph_scale') }}{{ scaleSize.toFixed(2) }}x
+            {{langPack.pl.graph_scale }}{{ scaleSize.toFixed(2) }}x
             <el-icon @click="scaleGraph(-1)" class="ZLPipeline-Zoom-Icons"><ZoomOut /></el-icon>
         </div>
-        <div class="ZLPipeline-Tips">{{ $t('pl.graph_hint_1') }} <span class="ZLPipeline-Key">Shift</span> + <img class="hintIcon" :src="mouseScroll" alt="scroll-svg" /> {{ $t('pl.graph_hint_2') }}</div>
+        <div class="ZLPipeline-Tips">{{ langPack.pl.graph_hint_1 }} <span class="ZLPipeline-Key">Shift</span> + <img class="hintIcon" :src="mouseScroll" alt="scroll-svg" /> {{ langPack.pl.graph_hint_2 }}</div>
         <div v-show="contextVis" ref="contextMenu" class="ZLPipeline-ContextMenu">
             <div class="ZLPipeline-ContextMenu-Title">
-                <div class="ZLPipeline-ContextMenu-Title-Text">{{ $t('pl.node_contextmenu_current') }}</div>
+                <div class="ZLPipeline-ContextMenu-Title-Text">{{ langPack.pl.node_contextmenu_current }}</div>
                 <div class="ZLPipeline-ContextMenu-Title-Node">{{ contextMenuTarget.name }}</div>
             </div>
             <div class="ZLPipeline-ContextMenu-Item" @click="openNodePop"><el-icon class="ContextIcon"><Setting /></el-icon>节点设置</div>
@@ -128,8 +128,8 @@
             <div v-show="!contextMenuTarget.is_enable" @click="enableNode" class="ZLPipeline-ContextMenu-Item"><el-icon class="ContextIcon"><CircleCheck /></el-icon>启用此节点</div>
         </div>
         <div @click="switchEditingMode" ref="editingControl" class="ZLPipeline-EditingControl">
-            <div class="EditingControlText" v-if="bEditingMode" style="color: white;" >{{ $t('pl.node_editmode_exit') }}</div>
-            <div class="EditingControlText" v-else >{{ $t('pl.node_editmode_enter') }}</div>
+            <div class="EditingControlText" v-if="bEditingMode" style="color: white;" >{{ langPack.pl.node_editmode_exit }}</div>
+            <div class="EditingControlText" v-else >{{ langPack.pl.node_editmode_enter }}</div>
             <el-icon class="EditingControlIcon">
                 <CircleClose class="iconSwitchAnim" v-if="bEditingMode" />
                 <EditPen class="iconSwitchAnim" v-else />
@@ -140,17 +140,17 @@
                 <el-tooltip
                     class="box-item"
                     effect="dark"
-                    :content="$t('msg.json_import')"
+                    :content="langPack.msg.json_import"
                     placement="top"
                 >
                     <el-button @click="importJson()" class="manageControlBtn" type="warning" plain round>
                         <el-icon class="btnIcon"><Upload /></el-icon>
-                        <div class="btnText">{{ $t('pl.json_import') }}</div>
+                        <div class="btnText">{{ langPack.pl.json_import }}</div>
                     </el-button>
                 </el-tooltip>
                 <el-button @click="saveAsJson()" class="manageControlBtn" type="success" plain round>
                     <el-icon class="btnIcon"><Download /></el-icon>
-                    <div class="btnText">{{ $t('pl.json_export') }}</div>
+                    <div class="btnText">{{ langPack.pl.json_export }}</div>
                 </el-button>
             </div>
         </div>
@@ -159,11 +159,12 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import mouseScroll from '@/assets/mouseScroll.svg';
 import { ElMessage } from 'element-plus';
 import { saveAs } from 'file-saver';
-import { useI18n } from "vue-i18n";
+import enUS from '@/locales/enUS';
+import zhCN from '@/locales/zhCN';
 import { 
     Promotion,
     CloseBold,
@@ -179,8 +180,6 @@ import {
     Upload,
     Download
 } from '@element-plus/icons-vue';
-
-const i18n = useI18n()
 
 class inputChildObj {
     name: string
@@ -278,9 +277,19 @@ const scaleGraph = (scale: number) => {
     }
 }
 
+const langPack = ref(zhCN)
+
+let localLangList = ['zhCN', 'enUS']
+if (localLangList.includes(props.lang)) {
+    langPack.value = (props.lang == 'zhCN')? zhCN : enUS
+}
+else {
+    langPack.value = zhCN
+}
+
 function openNodePop(node: any = null) {
     if (bEditingMode.value) {
-        ElMessage(i18n.t('msg.now_editing'))
+        ElMessage(langPack.value.msg.now_editing)
         return
     }
     if (node.name) contextMenuTarget.value = node
@@ -317,7 +326,7 @@ function handleFile(event: any) {
 
 const openContextMenu = (e: MouseEvent, node: any) => {
     if (bEditingMode.value) {
-        ElMessage(i18n.t('msg.now_editing'))
+        ElMessage(langPack.value.msg.now_editing)
         return
     }
     contextVis.value = true
@@ -352,11 +361,11 @@ function closePipelineGraph() {
 function switchEditingMode() {
     if (bEditingMode.value) {
         editingControl.value.style.backgroundColor = ""
-        ElMessage(i18n.t('msg.exit_editing'))
+        ElMessage(langPack.value.msg.exit_editing)
     }
     else {
         editingControl.value.style.backgroundColor = "darkred"
-        ElMessage(i18n.t('msg.enter_editing'))
+        ElMessage(langPack.value.msg.enter_editing)
     }
     bEditingMode.value = !bEditingMode.value 
 }
@@ -365,8 +374,8 @@ function addNode(targetNode: any) {
     if (!bEditingMode.value) return
     if (targetNode == 'start') {
         const newNode = {
-            name: i18n.t('pl.node_new') + (Math.random() * 10000).toFixed(0),
-            description: i18n.t('pl.node_new_desc'),
+            name: langPack.value.pl.node_new + (Math.random() * 10000).toFixed(0),
+            description: langPack.value.pl.node_new_desc,
             status: 'finished',
             is_enable: true,
             child: [],
@@ -378,8 +387,8 @@ function addNode(targetNode: any) {
     for (let i = 0; i < localGraphData.value.length; ++i) {
         if (localGraphData.value[i] == targetNode) {
             const newNode = {
-                name: i18n.t('pl.node_new') + (Math.random() * 10000).toFixed(0),
-                description: i18n.t('pl.node_new_desc'),
+                name: langPack.value.pl.node_new + (Math.random() * 10000).toFixed(0),
+                description: langPack.value.pl.node_new_desc,
                 status: 'finished',
                 is_enable: true,
                 child: [],
@@ -399,21 +408,6 @@ function deletePop(targetNode: any) {
         }
     }
 }
-
-onMounted(() => {
-    let localLang = localStorage.getItem('language') || 'zhCN'
-    let localLangList = ['zhCN', 'enUS']
-    if (!(localLang && localLang == props.lang)) {
-        if (localLangList.includes(localLang)) {
-            localStorage.setItem('language', props.lang)
-            i18n.locale.value = props.lang
-        }
-        else {
-            localStorage.setItem('language','zhCN')
-            i18n.locale.value = 'zhCN'
-        }
-    }
-})
 
 </script>
 

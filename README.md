@@ -74,7 +74,6 @@ If you want to develop ZL-Pipeline locally, you need to install these devDepende
     "vite": "^5.3.1",
     "vite-plugin-dts": "^4.2.2",
     "vue": "^3.4.29",
-    "vue-i18n": "^10.0.4",
     "vue-router": "^4.3.3",
     "vue-tsc": "^2.0.21"
 }

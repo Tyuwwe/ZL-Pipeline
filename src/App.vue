@@ -13,7 +13,7 @@
             </el-button>
         </div>
         <div class="ZLPipeline-Buttom">
-            Version 1.1.0 (0929)
+            Version 1.1.2 (1009)
             <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
             <a href="https://www.npmjs.com/package/zl-pipeline">NPM</a>
         </div>
@@ -35,7 +35,7 @@
     :pipelineVisible="manageVis" 
     :pipelineMeta="pipelineMeta" 
     :graphData="pipelineManageData"
-    lang="enUS"
+    lang="zhCN"
     @onClose="closeManage" 
     @onClickOpenNode="openNodePop"
     />

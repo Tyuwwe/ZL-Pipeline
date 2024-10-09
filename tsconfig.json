@@ -15,7 +15,8 @@
     "src/**/*.d.ts", 
     "src/**/*.tsx", 
     "src/**/*.vue",
-    "src/types/*.d.ts"
+    "src/types/*.d.ts",
+    "src/locales/*.ts"
   ],
   "exclude": ["node_modules"],
 }
