@@ -37,5 +37,10 @@ export default {
     sp: {
         no_item: 'No Result',
         exec_result: 'Execute Result',
+        impact: 'Impacted Servers',
+        msg: 'Message',
+        advice: 'Advice',
+        success: 'Success',
+        failed: 'Failed',
     }
 }

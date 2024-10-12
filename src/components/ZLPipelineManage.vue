@@ -376,7 +376,7 @@ function addNode(targetNode: any) {
         const newNode = {
             name: langPack.value.pl.node_new + (Math.random() * 10000).toFixed(0),
             description: langPack.value.pl.node_new_desc,
-            status: 'finished',
+            status: 'success',
             is_enable: true,
             child: [],
             result: []
@@ -389,7 +389,7 @@ function addNode(targetNode: any) {
             const newNode = {
                 name: langPack.value.pl.node_new + (Math.random() * 10000).toFixed(0),
                 description: langPack.value.pl.node_new_desc,
-                status: 'finished',
+                status: 'success',
                 is_enable: true,
                 child: [],
                 result: []
@@ -526,13 +526,13 @@ function deletePop(targetNode: any) {
 }
 
 .ZLPipeline-Container:has(.ZLPipeline-Control:hover) {
-    background-color: #dee4e94d;
+    background-color: #c9cdd13a;
 }
 
 .ZLPipeline-Control {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 30px;
+    top: 30px;
     padding: 10px;
     width: 20px;
     height: 20px;
@@ -544,14 +544,14 @@ function deletePop(targetNode: any) {
 
 .ZLPipeline-Control:hover {
     padding: 15px;
-    right: 15px;
-    top: 15px;
-    background-color: rgb(203, 213, 222);
+    right: 25px;
+    top: 25px;
+    background-color: rgb(226, 177, 177);
 }
 
 .ZLPipeline-Control:active {
     transition-duration: 0s;
-    background-color: rgb(167, 176, 184);
+    background-color: rgb(185, 134, 134);
 }
 
 .ZLPipeline-Bar {
@@ -606,10 +606,12 @@ function deletePop(targetNode: any) {
 
 @keyframes nodeIn {
     0% {
-        width: 0px;
+        transform: scale(0.8);
+        opacity: 0;
     }
     100% {
-        width: 200px;
+        transform: scale(1);
+        opacity: 1;
     }
 }
 

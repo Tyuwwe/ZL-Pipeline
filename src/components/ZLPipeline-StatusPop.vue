@@ -7,8 +7,30 @@
         </div>
         <div class="ZLPipeline-Pop-Content">
             <el-collapse style="padding-bottom: 50px;" v-model="activeNames" @change="handleChange">
-                <el-collapse-item v-for="data in popStatusList" :title="data.title" :name="data.title">
-                    <div style="white-space: pre">{{ data.text }}</div>
+                <el-collapse-item v-for="data in popStatusList" :name="data.title">    
+                    <template #title>
+                        <div style="flex: 1; text-align: start; display: flex; align-items: center; justify-content: start;">
+                            <el-tag type="success" class="status" v-if="!data.data.impact.length">{{ langPack.sp.success }}</el-tag>
+                            <el-tag type="error" class="status" v-else>{{ langPack.sp.failed }}</el-tag>
+                            {{ data.title }}
+                        </div>
+                        <div style="font-size: small;">{{ data.time }}</div>
+                    </template>
+                    <!-- <div style="white-space: pre">{{ data.data }}</div> -->
+                     <div class="collapse-item" v-if="data.data.msg != ''">
+                        <div class="collapse-item-title" >{{ langPack.sp.msg }}</div>
+                        <div class="collapse-msg" >{{ data.data.msg }}</div>
+                     </div>
+                     <div class="collapse-impact" v-if="data.data.impact.length">
+                        <el-divider />
+                        <div class="collapse-item-title" >{{ langPack.sp.impact }}</div>
+                        <el-tag class="collapse-impact-item" type="danger" v-for="ipt in data.data.impact">{{ ipt }}</el-tag>
+                     </div>
+                     <div class="collapse-item" v-if="data.data.advice != ''">
+                        <el-divider />
+                        <div class="collapse-item-title" >{{ langPack.sp.advice }}</div>
+                        <div class="collapse-advice" >{{ data.data.advice }}</div>
+                     </div>
                 </el-collapse-item>
                 <el-collapse-item v-show="popStatusList.length == 0" :title="langPack.sp.no_item" name="1">
                 </el-collapse-item>
@@ -18,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import enUS from '@/locales/enUS';
 import zhCN from '@/locales/zhCN';
 import { 
@@ -30,11 +52,8 @@ const activeNames = ref([])
 const popContainer = ref<any>()
 const blackCover = ref<any>()
 const handleChange = (val: string[]) => {
+  emit('onChange', val)
   return
-}
-
-interface popArr {
-    title: String
 }
 
 const props = defineProps({
@@ -52,8 +71,13 @@ const props = defineProps({
         type: Object,
         default: [
             {
-                title: '无返回结果',
-                text: ''
+                title: '',
+                time: '',
+                data: {
+                	"msg": "",
+                	"impact": [],
+                	"advice": ""
+                }
             }
         ]
     },
@@ -63,6 +87,7 @@ const props = defineProps({
     }
 })
 
+console.log(props)
 const langPack = ref(zhCN)
 
 let localLangList = ['zhCN', 'enUS']
@@ -73,7 +98,7 @@ else {
     langPack.value = zhCN
 }
 
-const emit = defineEmits(['onClose'])
+const emit = defineEmits(['onClose', 'onChange'])
 
 function closePop() {
     blackCover.value.style.opacity = 0;
@@ -87,6 +112,15 @@ function closePop() {
         emit('onClose')
     }, 500)
 }
+
+// 添加 Esc 监听事件
+onMounted(() => {
+    document.addEventListener('keyup', (e) => {
+        if (e.keyCode == 27) {
+            closePop()
+        }
+    })
+})
 </script>
 
 <style lang="less" scoped>
@@ -200,6 +234,32 @@ function closePop() {
     font-size: 1.1rem;
 }
 
+.collapse-item {
+    width: 100%;
+}
+
+.collapse-impact {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.collapse-impact-item {
+    margin-right: 5px;
+}
+
+.collapse-item-title {
+    width: 100%;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.status {
+    margin-right: 10px;
+}
+
 :deep(.el-collapse-item__header) {
     background-color: #00000010;
     border-radius: 10px;
@@ -229,5 +289,10 @@ function closePop() {
 
 :deep(.el-collapse-item__header:active) {
     background-color: #00000025;
+}
+
+:deep(.el-divider--horizontal) {
+    margin-top: 10px; 
+    margin-bottom: 5px;
 }
 </style>

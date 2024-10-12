@@ -4,7 +4,7 @@
 
 #### A single-line Pipeline component package (Under Development)
 
-<img src="https://img.shields.io/badge/Latest-1.1.1-rgb(53,73,94).svg" alt="vue">
+<img src="https://img.shields.io/badge/Latest-1.1.3-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/Vue3-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/TypeScript-rgb(21, 59, 115).svg" alt="vue">
 <img src="https://img.shields.io/badge/Pipeline-rgb(21, 119, 115).svg" alt="vue">
@@ -257,6 +257,7 @@ All of them will receive some certain typed data:
         name: string
         description: string
         status: string
+        // Status: success / running / waiting / error
         is_enable: boolean
         child: {
             name: string
@@ -268,7 +269,12 @@ All of them will receive some certain typed data:
         }
         result: {
             title: string
-            text: string
+            time: string
+            data: {
+                msg: string
+                impact: Array<any>
+                advice: string
+            }
         }
     },
     {
@@ -290,8 +296,13 @@ All of them will receive some certain typed data:
 ```typescript
 [
     {
-        title: string,
-        text: string
+        title: string
+        time: string
+        data: {
+            msg: string
+            impact: Array<any>
+            advice: string
+        }
     },
     {
         // Other Status

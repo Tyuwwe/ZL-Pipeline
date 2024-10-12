@@ -179,10 +179,12 @@ class inputChildObj {
 
 class inputResultObj {
     title: string
-    text: string
-    constructor(title: string, text: string) {
+    time: string
+    data: object
+    constructor(title: string, time: string, data: object) {
         this.title = title
-        this.text = text
+        this.time = time
+        this.data = data
     }
 }
 
@@ -391,28 +393,28 @@ function deletePop(targetNode: any) {
 
 interface statusEnum {
     [key: string]: string;
-    finished: string;
+    success: string;
     running: string;
     waiting: string;
     error: string;
 }
 
 const nodeClassEnum: statusEnum = {
-    'finished': 'ZLPipeline-Node-Top Node-Finished',
+    'success': 'ZLPipeline-Node-Top Node-Finished',
     'running': 'ZLPipeline-Node-Top Node-Running',
     'waiting': 'ZLPipeline-Node-Top Node-Waiting',
     'error': 'ZLPipeline-Node-Top Node-Error',
 }
 
 const nodeChildClassEnum: statusEnum = {
-    'finished': 'ZLPipeline-Node-ChildNode Child-Node-Finished',
+    'success': 'ZLPipeline-Node-ChildNode Child-Node-Finished',
     'running': 'ZLPipeline-Node-ChildNode Child-Node-Running',
     'waiting': 'ZLPipeline-Node-ChildNode Child-Node-Waiting',
     'error': 'ZLPipeline-Node-ChildNode Child-Node-Error',
 }
 
 const nodeStatusEnum: statusEnum = {
-    'finished': langPack.value.pl.node_status_finished,
+    'success': langPack.value.pl.node_status_finished,
     'running': langPack.value.pl.node_status_running,
     'waiting': langPack.value.pl.node_status_waiting,
     'error': langPack.value.pl.node_status_error,
@@ -490,13 +492,13 @@ const nodeStatusEnum: statusEnum = {
 }
 
 .ZLPipeline-Container:has(.ZLPipeline-Control:hover) {
-    background-color: #dee4e94d;
+    background-color: #c9cdd13a;
 }
 
 .ZLPipeline-Control {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 30px;
+    top: 30px;
     padding: 10px;
     width: 20px;
     height: 20px;
@@ -508,14 +510,14 @@ const nodeStatusEnum: statusEnum = {
 
 .ZLPipeline-Control:hover {
     padding: 15px;
-    right: 15px;
-    top: 15px;
-    background-color: rgb(203, 213, 222);
+    right: 25px;
+    top: 25px;
+    background-color: rgb(226, 177, 177);
 }
 
 .ZLPipeline-Control:active {
     transition-duration: 0s;
-    background-color: rgb(167, 176, 184);
+    background-color: rgb(185, 134, 134);
 }
 
 .ZLPipeline-Bar {
@@ -570,13 +572,14 @@ const nodeStatusEnum: statusEnum = {
 
 @keyframes nodeIn {
     0% {
-        width: 0px;
+        transform: scale(0.8);
+        opacity: 0;
     }
     100% {
-        width: 200px;
+        transform: scale(1);
+        opacity: 1;
     }
 }
-
 .ZLPipeline-Node {
     animation: nodeIn .5s;
     height: auto;

@@ -13,7 +13,7 @@
             </el-button>
         </div>
         <div class="ZLPipeline-Buttom">
-            Version 1.1.2 (1009)
+            Version 1.1.3 (1012)
             <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
             <a href="https://www.npmjs.com/package/zl-pipeline">NPM</a>
         </div>
@@ -25,7 +25,7 @@
     :bAllowEditPopover="false"
     :graphData="pipelineData" 
     :pipelineMeta="pipelineMeta"
-    lang="enUS"
+    lang="zhCN"
     @onClose="closePipeline" 
     @onClickOpenNode="openNodePop"
     @onClickOpenStatus="openStatusPop"
@@ -52,7 +52,7 @@
     :popMeta="popMeta" 
     :popStatusList="popStatusList" 
     :popVisible="popVis" 
-    lang="enUS"
+    lang="zhCN"
     @onClose="closeStatusPop" 
     />
 
@@ -130,13 +130,13 @@ const pipelineData = ref([
     {
         name: '节点1',
         description: '示例节点描述1，该节点可以进行若干操作',
-        status: 'finished',
+        status: 'success',
         is_enable: true,
         child: [
             {
                 name: '子节点1',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -144,7 +144,7 @@ const pipelineData = ref([
             {
                 name: '子节点2',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -152,7 +152,7 @@ const pipelineData = ref([
             {
                 name: '子节点3',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -160,7 +160,7 @@ const pipelineData = ref([
             {
                 name: '子节点4',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -168,7 +168,7 @@ const pipelineData = ref([
             {
                 name: '子节点5',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -176,7 +176,7 @@ const pipelineData = ref([
             {
                 name: '子节点6',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -184,7 +184,7 @@ const pipelineData = ref([
             {
                 name: '子节点7',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -193,19 +193,39 @@ const pipelineData = ref([
         result: [
             {
                 title: '结果1',
-                text: '[2024-09-13T06:59:57.530Z] 操作1 已完成'
+                time: '2024-09-13T06:59:57.530Z',
+                data: {
+                	msg: "操作1 已完成",
+                	impact: ['192.168.1.1', '1.54.32.4'],
+                	advice: "服务器升配"
+                }
             },
             {
                 title: '执行脚本',
-                text: '[2024-09-13T06:59:57.789Z] 脚本已执行'
+                time: '2024-09-13T06:59:57.789Z',
+                data: {
+                	msg: "脚本已执行",
+                	impact: [],
+                	advice: ""
+                }
             },
             {
                 title: '打印数据',
-                text: "[2024-09-13T07:22:34.053Z] 数据已打印"
+                time: "2024-09-13T07:22:34.053Z",
+                data: {
+                	msg: "",
+                	impact: [],
+                	advice: ""
+                }
             },
             {
                 title: '读取JSON',
-                text: ''
+                time: '',
+                data: {
+                	msg: "",
+                	impact: [],
+                	advice: ""
+                }
             }
         ]
     },
@@ -218,15 +238,30 @@ const pipelineData = ref([
         result: [
             {
                 title: '是否启动',
-                text: '[2024-09-13T07:22:34.093Z] 是否启动'
+                time: '2024-09-13T07:22:34.093Z',
+                data: {
+                	msg: "是否启动",
+                	impact: [],
+                	advice: ""
+                }
             },
             {
                 title: '测试网络连接',
-                text: '[2024-09-13T06:59:57.789Z] 已测试'
+                time: '2024-09-13T06:59:57.789Z',
+                data: {
+                	msg: "已测试",
+                	impact: [],
+                	advice: ""
+                }
             },
             {
                 title: '等待输入',
-                text: ''
+                time: '',
+                data: {
+                	msg: "",
+                	impact: [],
+                	advice: ""
+                }
             }
         ]
     },
@@ -255,7 +290,7 @@ const pipelineData = ref([
             {
                 name: '子节点3',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -264,11 +299,21 @@ const pipelineData = ref([
         result: [
             {
                 title: '示例结果',
-                text: '[2024-09-13T21:10:37.210Z] 展示成功'
+                time: '2024-09-13T21:10:37.210Z',
+                data: {
+                	msg: "展示成功",
+                	impact: [],
+                	advice: ""
+                }
             },
             {
                 title: '等待输入',
-                text: ''
+                time: '',
+                data: {
+                	msg: "已测试",
+                	impact: [],
+                	advice: ""
+                }
             }
         ]
     },
@@ -289,7 +334,7 @@ const pipelineData = ref([
             {
                 name: '子节点1',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -297,7 +342,7 @@ const pipelineData = ref([
             {
                 name: '子节点2',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -306,7 +351,12 @@ const pipelineData = ref([
         result: [
             {
                 title: '节点执行状态',
-                text: '[2024-09-13T21:12:01.173Z] 已完成'
+                time: '2024-09-13T21:12:01.173Z',
+                data: {
+                	msg: "已完成",
+                	impact: [],
+                	advice: ""
+                }
             },
         ]
     },
@@ -316,13 +366,13 @@ const pipelineManageData = ref([
     {
         name: '节点1',
         description: '示例节点描述1，该节点可以进行若干操作',
-        status: 'finished',
+        status: 'success',
         is_enable: true,
         child: [
             {
                 name: '子节点1',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -330,7 +380,7 @@ const pipelineManageData = ref([
             {
                 name: '子节点2',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -338,7 +388,7 @@ const pipelineManageData = ref([
             {
                 name: '子节点3',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -346,7 +396,7 @@ const pipelineManageData = ref([
             {
                 name: '子节点4',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -354,7 +404,7 @@ const pipelineManageData = ref([
             {
                 name: '子节点5',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -362,7 +412,7 @@ const pipelineManageData = ref([
             {
                 name: '子节点6',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -370,30 +420,13 @@ const pipelineManageData = ref([
             {
                 name: '子节点7',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
             },
         ],
-        result: [
-            {
-                title: '结果1',
-                text: '[2024-09-13T06:59:57.530Z] 操作1 已完成'
-            },
-            {
-                title: '执行脚本',
-                text: '[2024-09-13T06:59:57.789Z] 脚本已执行'
-            },
-            {
-                title: '打印数据',
-                text: "[2024-09-13T07:22:34.053Z] 数据已打印"
-            },
-            {
-                title: '读取JSON',
-                text: ''
-            }
-        ]
+        result: []
     },
     {
         name: '节点2',
@@ -401,20 +434,7 @@ const pipelineManageData = ref([
         status: 'running',
         is_enable: true,
         child: [],
-        result: [
-            {
-                title: '是否启动',
-                text: '[2024-09-13T07:22:34.093Z] 是否启动'
-            },
-            {
-                title: '测试网络连接',
-                text: '[2024-09-13T06:59:57.789Z] 已测试'
-            },
-            {
-                title: '等待输入',
-                text: ''
-            }
-        ]
+        result: []
     },
     {
         name: '节点3',
@@ -441,22 +461,13 @@ const pipelineManageData = ref([
             {
                 name: '子节点3',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
             }
         ],
-        result: [
-            {
-                title: '示例结果',
-                text: '[2024-09-13T21:10:37.210Z] 展示成功'
-            },
-            {
-                title: '等待输入',
-                text: ''
-            }
-        ]
+        result: []
     },
     {
         name: '节点4',
@@ -475,7 +486,7 @@ const pipelineManageData = ref([
             {
                 name: '子节点1',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
@@ -483,18 +494,13 @@ const pipelineManageData = ref([
             {
                 name: '子节点2',
                 description: '描述',
-                status: 'finished',
+                status: 'success',
                 order: 1,
                 game_type: [],
                 is_enable: true,
             },
         ],
-        result: [
-            {
-                title: '节点执行状态',
-                text: '[2024-09-13T21:12:01.173Z] 已完成'
-            },
-        ]
+        result: []
     },
 ])
 

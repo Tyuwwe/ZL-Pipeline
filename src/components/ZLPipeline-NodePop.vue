@@ -80,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { 
     CloseBold,
     Operation,
@@ -173,6 +173,15 @@ const nodeStatusEnum: statusEnum = {
     'waiting': '等待中',
     'error': '执行出错',
 }
+
+// 添加 Esc 监听事件
+onMounted(() => {
+    document.addEventListener('keyup', (e) => {
+        if (e.keyCode == 27) {
+            closePop()
+        }
+    })
+})
 </script>
 
 <style lang="less" scoped>
