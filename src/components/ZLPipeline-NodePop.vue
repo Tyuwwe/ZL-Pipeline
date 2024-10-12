@@ -29,6 +29,7 @@
                                 <el-input-number style="width: 100%;" v-model="scope.row.order" :min="1" :max="50" @change="handleChange" />
                             </template>
                         </el-table-column>
+                        <el-table-column prop="script" label="脚本名" width="200" />
                         <el-table-column prop="game_type" label="游戏功能" width="180">
                             <template #default="scope">
                                 <el-select
@@ -115,6 +116,7 @@ const props = defineProps({
             child: [
                 {
                     name: '',
+                    script: '',
                     description: '',
                     status: '',
                     order: 1,

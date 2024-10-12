@@ -27,6 +27,11 @@ export default {
         node_disabled: '已禁用节点',
         json_import: '导入JSON',
         json_export: '导出JSON',
+        child_exec_script: '执行脚本',
+        child_desc: '描述',
+        child_types: '游戏功能',
+        copy_tip: '点击子节点可复制脚本名',
+        copy_success: '已复制'
     },
     msg: {
         now_editing: '当前为编辑模式，无法使用此操作',

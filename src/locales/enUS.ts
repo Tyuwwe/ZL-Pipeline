@@ -27,6 +27,11 @@ export default {
         node_disabled: 'Disabled Node',
         json_import: 'Import JSON File',
         json_export: 'Export JSON File',
+        child_exec_script: 'Execute Script',
+        child_desc: 'Description',
+        child_types: 'Game Types',
+        copy_tip: 'Click child node can copy script name',
+        copy_success: 'Copied'
     },
     msg: {
         now_editing: 'This action is not available in editing mode',

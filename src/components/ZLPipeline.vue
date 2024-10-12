@@ -87,9 +87,30 @@
                         <div 
                             v-for="child in node.child" 
                             :class="nodeChildClassEnum[child.status]"
-                        >
-                            <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name">{{ child.name }}</div>
-                            <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;">{{ child.name }}</div>
+                        > 
+                            <el-popover
+                            :width="300"
+                            popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px; pointer-events: none; border-radius: 20px;"
+                            >
+                                <template #reference>
+                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name" @click="copyScriptName(child.script)">{{ child.name }}</div>
+                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;" @click="copyScriptName(child.script)">{{ child.name }}</div>
+                                </template>
+                                <template #default>
+                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name">{{ child.name }}</div>
+                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;">{{ child.name }}</div>
+                                    <el-divider class="pop-divider" />
+                                    <div class="popoverTitle">{{ langPack.pl.child_desc }}</div>
+                                    <div>{{ child.description }}</div>
+                                    <el-divider class="pop-divider" />
+                                    <div class="popoverTitle">{{ langPack.pl.child_types }}</div>
+                                    <el-tag v-for="type in child.game_type" type="info" style="margin-right: 5px; margin-top: 4px;">{{ type }}</el-tag>
+                                    <el-divider class="pop-divider" />
+                                    <div class="popoverTitle">{{ langPack.pl.child_exec_script }}</div>
+                                    <div>{{ child.script }}</div>
+                                    <div class="smallTips">{{ langPack.pl.copy_tip }}</div>
+                                </template>
+                            </el-popover>
                         </div>
                         <el-icon class="ZLPipeline-Node-Bottom-Endline" @click="openNodePop(node)"><SemiSelect class="ZLPipeline-Node-Bottom-Endline-Left" /><SemiSelect /></el-icon>
                     </div>
@@ -98,8 +119,29 @@
                             v-for="child in node.child" 
                             :class="nodeChildClassEnum[child.status]"
                         >
-                            <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name">{{ child.name }}</div>
-                            <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;">{{ child.name }}</div>
+                            <el-popover
+                            :width="300"
+                            popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px; pointer-events: none; border-radius: 20px;"
+                            >
+                                <template #reference>
+                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name" @click="copyScriptName(child.script)">{{ child.name }}</div>
+                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;" @click="copyScriptName(child.script)">{{ child.name }}</div>
+                                </template>
+                                <template #default>
+                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name">{{ child.name }}</div>
+                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;">{{ child.name }}</div>
+                                    <el-divider class="pop-divider" />
+                                    <div class="popoverTitle">{{ langPack.pl.child_desc }}</div>
+                                    <div>{{ child.description }}</div>
+                                    <el-divider class="pop-divider" />
+                                    <div class="popoverTitle">{{ langPack.pl.child_types }}</div>
+                                    <el-tag v-for="type in child.game_type" type="info" style="margin-right: 5px; margin-top: 4px;">{{ type }}</el-tag>
+                                    <el-divider class="pop-divider" />
+                                    <div class="popoverTitle">{{ langPack.pl.child_exec_script }}</div>
+                                    <div>{{ child.script }}</div>
+                                    <div class="smallTips">{{ langPack.pl.copy_tip }}</div>
+                                </template>
+                            </el-popover>
                         </div>
                         <el-icon class="ZLPipeline-Node-Bottom-Endline" @click="openNodePop(node)"><SemiSelect class="ZLPipeline-Node-Bottom-Endline-Left" /><SemiSelect /></el-icon>
                     </div>
@@ -144,6 +186,7 @@ import { ref } from 'vue';
 import { MessageBox } from '@element-plus/icons-vue';
 import mouseScroll from '@/assets/mouseScroll.svg';
 import { ElMessage } from 'element-plus';
+import clipboard from 'clipboard'
 import enUS from '@/locales/enUS';
 import zhCN from '@/locales/zhCN';
 import { 
@@ -162,13 +205,15 @@ import {
 
 class inputChildObj {
     name: string
+    script: string
     description: string
     status: string
     is_enable: boolean
     order: number
     game_type: Array<string>
-    constructor(n: string, d: string, s: string, i: boolean, o: number, g: Array<string>) {
+    constructor(n: string, sc: string, d: string, s: string, i: boolean, o: number, g: Array<string>) {
         this.name = n
+        this.script = sc
         this.description = d
         this.status = s
         this.is_enable = i
@@ -419,6 +464,14 @@ const nodeStatusEnum: statusEnum = {
     'waiting': langPack.value.pl.node_status_waiting,
     'error': langPack.value.pl.node_status_error,
 }
+
+function copyScriptName(scriptName: string) {
+    clipboard.copy(scriptName)
+    ElMessage({
+        type: 'success',
+        message: langPack.value.pl.copy_success
+    })
+}
 </script>
 
 <style lang="less" scoped>
@@ -468,6 +521,7 @@ const nodeStatusEnum: statusEnum = {
 .ZLPipeline-ContextMenu,
 .ZLPipeline-ContextMenu-Item,
 .ZLPipeline-ContextMenu-Title,
+.ZLPipeline-Node-ChildNode-Name,
 .ZLPipeline-EditingControl {
     display: flex;
     align-items: center;
@@ -644,8 +698,10 @@ const nodeStatusEnum: statusEnum = {
 }
 
 .ZLPipeline-Node-ChildNode-Name {
-    text-align: center;
     font-size: 0.9rem;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
 .ZLPipeline-Node-Bottom-Endline {
@@ -943,5 +999,22 @@ const nodeStatusEnum: statusEnum = {
 
 .Child-Node-Error:hover {
     background-color: #74000020;
+}
+
+.pop-divider {
+    margin-top: 10px; 
+    margin-bottom: 5px;
+}
+
+.popoverTitle {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.smallTips {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    font-weight: lighter;
+    margin-top: 5px;
 }
 </style>

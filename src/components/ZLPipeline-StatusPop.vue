@@ -140,13 +140,11 @@ onMounted(() => {
 @keyframes boxIn {
     0% {
         transform: translate(-50%, -50%) scale(0.85);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        opacity: 0;
     }
     100% {
         transform: translate(-50%, -50%) scale(1);
-        backdrop-filter: blur(0px);
-        -webkit-backdrop-filter: blur(0px);
+        opacity: 1;
     }
 }
 

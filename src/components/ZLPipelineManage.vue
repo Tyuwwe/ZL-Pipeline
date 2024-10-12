@@ -183,13 +183,15 @@ import {
 
 class inputChildObj {
     name: string
+    script: string
     description: string
     status: string
     is_enable: boolean
     order: number
     game_type: Array<string>
-    constructor(n: string, d: string, s: string, i: boolean, o: number, g: Array<string>) {
+    constructor(n: string, sc: string, d: string, s: string, i: boolean, o: number, g: Array<string>) {
         this.name = n
+        this.script = sc
         this.description = d
         this.status = s
         this.is_enable = i
@@ -695,19 +697,20 @@ function deletePop(targetNode: any) {
 .ZLPipeline-Node-Bottom-Endline {
     width: 100%;
     height: 20px;
-    transition-duration: 0.5s;
+    transition-duration: .2s;
     cursor: pointer;
     color: #818181;
-    transition: color 0.2s, background-color 0.5s, transform 0.2s;
 }
 
 .Endline-Editing {
     transform: rotate(0deg);
+    transition-duration: .2s;
 }
 
 .ZLPipeline-Node-Bottom-Endline-Left-Editing {
     margin-right: -16px;
-    transition: color 0.2s, background-color 0.5s, transform 0.2s;
+    transform: rotate(0deg);
+    transition-duration: .2s;
 }
 
 .ZLPipeline-Node-Bottom-Endline:has(.Endline-Editing):hover {
@@ -964,5 +967,10 @@ function deletePop(targetNode: any) {
 
 .Child-Node-Error:hover {
     background-color: #74000020;
+}
+
+:deep(.el-divider--horizontal) {
+    margin-top: 10px; 
+    margin-bottom: 5px;
 }
 </style>
