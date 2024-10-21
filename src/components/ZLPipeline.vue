@@ -543,6 +543,7 @@ function copyScriptName(scriptName: string) {
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans SC', sans-serif;
+    z-index: 2000;
 }
 
 .ZLPipeline-Container:has(.ZLPipeline-Control:hover) {

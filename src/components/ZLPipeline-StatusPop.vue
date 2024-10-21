@@ -170,7 +170,7 @@ onMounted(() => {
     top: 50%;
     transform: translate(-50%, -50%);
     background-color: rgb(250, 250, 250);
-    z-index: 1200;
+    z-index: 3000;
     border-radius: 20px;
     overflow: hidden;
     transition-duration: 0.5s;
@@ -188,7 +188,7 @@ onMounted(() => {
     position: absolute;
     width: 100vw;
     height: 100vh;
-    z-index: 1100;
+    z-index: 2500;
     background-color: rgba(50, 50, 50, 0.8);
     top: 0;
     left: 0;

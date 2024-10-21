@@ -4,7 +4,7 @@
 
 #### A single-line Pipeline component package (Under Development)
 
-<img src="https://img.shields.io/badge/Latest-1.1.4-rgb(53,73,94).svg" alt="vue">
+<img src="https://img.shields.io/badge/Latest-1.1.6-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/Vue3-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/TypeScript-rgb(21, 59, 115).svg" alt="vue">
 <img src="https://img.shields.io/badge/Pipeline-rgb(21, 119, 115).svg" alt="vue">
