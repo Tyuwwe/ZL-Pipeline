@@ -13,7 +13,7 @@
             </el-button>
         </div>
         <div class="ZLPipeline-Buttom">
-            Version 1.1.5 (1021)
+            Version 1.1.6 (1021)
             <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
             <a href="https://www.npmjs.com/package/zl-pipeline">NPM</a>
         </div>
@@ -275,7 +275,7 @@ const pipelineData = ref([
     {
         name: '节点3',
         description: '示例节点描述3，该节点可以进行若干操作',
-        status: 'error',
+        status: 'failed',
         is_enable: true,
         child: [
             {
@@ -291,7 +291,7 @@ const pipelineData = ref([
                 name: '子节点2',
                 script: 'test.py',
                 description: '子节点描述',
-                status: 'error',
+                status: 'failed',
                 order: 1,
                 game_type: ['type1', 'type2'],
                 is_enable: true,
@@ -458,7 +458,7 @@ const pipelineManageData = ref([
     {
         name: '节点3',
         description: '示例节点描述3，该节点可以进行若干操作',
-        status: 'error',
+        status: 'failed',
         is_enable: true,
         child: [
             {
@@ -474,7 +474,7 @@ const pipelineManageData = ref([
                 name: '子节点2',
                 script: 'test.py',
                 description: '子节点描述',
-                status: 'error',
+                status: 'failed',
                 order: 1,
                 game_type: ['type1', 'type2'],
                 is_enable: true,
