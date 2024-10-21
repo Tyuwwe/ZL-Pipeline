@@ -441,28 +441,28 @@ interface statusEnum {
     success: string;
     running: string;
     waiting: string;
-    error: string;
+    failed: string;
 }
 
 const nodeClassEnum: statusEnum = {
     'success': 'ZLPipeline-Node-Top Node-Finished',
     'running': 'ZLPipeline-Node-Top Node-Running',
     'waiting': 'ZLPipeline-Node-Top Node-Waiting',
-    'error': 'ZLPipeline-Node-Top Node-Error',
+    'failed': 'ZLPipeline-Node-Top Node-Error',
 }
 
 const nodeChildClassEnum: statusEnum = {
     'success': 'ZLPipeline-Node-ChildNode Child-Node-Finished',
     'running': 'ZLPipeline-Node-ChildNode Child-Node-Running',
     'waiting': 'ZLPipeline-Node-ChildNode Child-Node-Waiting',
-    'error': 'ZLPipeline-Node-ChildNode Child-Node-Error',
+    'failed': 'ZLPipeline-Node-ChildNode Child-Node-Error',
 }
 
 const nodeStatusEnum: statusEnum = {
     'success': langPack.value.pl.node_status_finished,
     'running': langPack.value.pl.node_status_running,
     'waiting': langPack.value.pl.node_status_waiting,
-    'error': langPack.value.pl.node_status_error,
+    'failed': langPack.value.pl.node_status_error,
 }
 
 function copyScriptName(scriptName: string) {

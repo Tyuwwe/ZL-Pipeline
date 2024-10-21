@@ -166,14 +166,14 @@ interface statusEnum {
     finished: string;
     running: string;
     waiting: string;
-    error: string;
+    failed: string;
 }
 
 const nodeStatusEnum: statusEnum = {
     'finished': '已结束',
     'running': '运行中',
     'waiting': '等待中',
-    'error': '执行出错',
+    'failed': '执行出错',
 }
 
 // 添加 Esc 监听事件

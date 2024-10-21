@@ -257,7 +257,7 @@ All of them will receive some certain typed data:
         name: string
         description: string
         status: string
-        // Status: success / running / waiting / error
+        // Status: success / running / waiting / failed
         is_enable: boolean
         child: {
             name: string
@@ -322,4 +322,4 @@ All of them will receive some certain typed data:
 
 > Author: Tyuwwe
 >
-> Date: 2024/10/12
+> Date: 2024/10/21
