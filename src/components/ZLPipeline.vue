@@ -93,12 +93,12 @@
                             popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px; pointer-events: none; border-radius: 20px;"
                             >
                                 <template #reference>
-                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name" @click="copyScriptName(child.script)">{{ child.name }}</div>
-                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;" @click="copyScriptName(child.script)">{{ child.name }}</div>
+                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name" @click="copyScriptName(child.script)"><el-icon :class="nodeChildIconClassEnum[child.status]"><component :is="nodeChildIconEnum[child.status]" /></el-icon> {{ child.name }}</div>
+                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;" @click="copyScriptName(child.script)"><el-icon class="ChildNode-Icon"><Remove /></el-icon> {{ child.name }}</div>
                                 </template>
                                 <template #default>
-                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name">{{ child.name }}</div>
-                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;">{{ child.name }}</div>
+                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name" style="justify-content: center;"><el-icon :class="nodeChildIconClassEnum[child.status]"><component :is="nodeChildIconEnum[child.status]" /></el-icon> {{ child.name }} - {{ nodeStatusEnum[child.status] }}</div>
+                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1; justify-content: center;"><el-icon class="ChildNode-Icon"><Remove /></el-icon> {{ child.name }} - 已禁用</div>
                                     <el-divider class="pop-divider" />
                                     <div class="popoverTitle">{{ langPack.pl.child_desc }}</div>
                                     <div>{{ child.description }}</div>
@@ -124,12 +124,12 @@
                             popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px; pointer-events: none; border-radius: 20px;"
                             >
                                 <template #reference>
-                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name" @click="copyScriptName(child.script)">{{ child.name }}</div>
-                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;" @click="copyScriptName(child.script)">{{ child.name }}</div>
+                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name" @click="copyScriptName(child.script)"><el-icon :class="nodeChildIconClassEnum[child.status]"><component :is="nodeChildIconEnum[child.status]" /></el-icon> {{ child.name }}</div>
+                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;" @click="copyScriptName(child.script)"><el-icon class="ChildNode-Icon"><Remove /></el-icon> {{ child.name }}</div>
                                 </template>
                                 <template #default>
-                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name">{{ child.name }}</div>
-                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1;">{{ child.name }}</div>
+                                    <div v-if="child.is_enable" class="ZLPipeline-Node-ChildNode-Name" style="justify-content: center;"><el-icon :class="nodeChildIconClassEnum[child.status]"><component :is="nodeChildIconEnum[child.status]" /></el-icon> {{ child.name }} - {{ nodeStatusEnum[child.status] }}</div>
+                                    <div v-else class="ZLPipeline-Node-ChildNode-Name" style="color: #c1c1c1; justify-content: center;"><el-icon class="ChildNode-Icon"><Remove /></el-icon> {{ child.name }} - 已禁用</div>
                                     <el-divider class="pop-divider" />
                                     <div class="popoverTitle">{{ langPack.pl.child_desc }}</div>
                                     <div>{{ child.description }}</div>
@@ -200,7 +200,10 @@ import {
     Setting,
     CircleClose,
     CircleCheck,
-    EditPen
+    EditPen,
+    More,
+    Loading,
+    Remove
 } from '@element-plus/icons-vue';
 
 class inputChildObj {
@@ -444,6 +447,14 @@ interface statusEnum {
     failed: string;
 }
 
+interface statusIconEnum {
+    [key: string]: any;
+    success: any;
+    running: any;
+    waiting: any;
+    failed: any;
+}
+
 const nodeClassEnum: statusEnum = {
     'success': 'ZLPipeline-Node-Top Node-Finished',
     'running': 'ZLPipeline-Node-Top Node-Running',
@@ -456,6 +467,20 @@ const nodeChildClassEnum: statusEnum = {
     'running': 'ZLPipeline-Node-ChildNode Child-Node-Running',
     'waiting': 'ZLPipeline-Node-ChildNode Child-Node-Waiting',
     'failed': 'ZLPipeline-Node-ChildNode Child-Node-Error',
+}
+
+const nodeChildIconClassEnum: statusEnum = {
+    'success': "ChildNode-Icon i-success",
+    'running': "ChildNode-Icon i-running",
+    'waiting': "ChildNode-Icon i-waiting",
+    'failed': "ChildNode-Icon i-failed",
+}
+
+const nodeChildIconEnum: statusIconEnum = {
+    'success': CircleCheck,
+    'running': Loading,
+    'waiting': More,
+    'failed': CircleClose,
 }
 
 const nodeStatusEnum: statusEnum = {
@@ -698,11 +723,23 @@ function copyScriptName(scriptName: string) {
     background-color: #00000010;
 }
 
+.ChildNode-Icon {
+    height: 100%;
+    width: 10%;
+    margin-right: 5px;
+}
+
 .ZLPipeline-Node-ChildNode-Name {
     font-size: 0.9rem;
+    flex: 1;
     width: 100%;
     height: 100%;
     cursor: pointer;
+    justify-content: space-between;
+    padding-right: 10px;
+    padding-left: 10px;
+    box-sizing: border-box;
+    text-align: right;
 }
 
 .ZLPipeline-Node-Bottom-Endline {
@@ -977,7 +1014,7 @@ function copyScriptName(scriptName: string) {
 
 .hintIcon {
     height: 2.3rem; 
-    transform: translateY(10px);
+    transform: translateY(10px) !important;
 }
 
 @keyframes warningTextInf {
@@ -1017,5 +1054,22 @@ function copyScriptName(scriptName: string) {
     opacity: 0.8;
     font-weight: lighter;
     margin-top: 5px;
+}
+
+@keyframes runningIcon {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.i-running {
+    animation: runningIcon 1s infinite linear;
+}
+
+.i-waiting {
+    animation: runningIcon 2s infinite;
 }
 </style>

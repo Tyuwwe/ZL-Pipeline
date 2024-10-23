@@ -87,7 +87,6 @@ const props = defineProps({
     }
 })
 
-console.log(props)
 const langPack = ref(zhCN)
 
 let localLangList = ['zhCN', 'enUS']

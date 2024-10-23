@@ -945,7 +945,8 @@ function deletePop(targetNode: any) {
 
 .hintIcon {
     height: 2.3rem; 
-    transform: translateY(10px);
+    transform: translateY(10px) !important;
+    vertical-align: auto !important;
 }
 
 @keyframes warningTextInf {
