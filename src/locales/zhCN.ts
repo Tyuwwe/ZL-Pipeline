@@ -42,7 +42,7 @@ export default {
     sp: {
         no_item: '无返回结果',
         exec_result: '的执行结果',
-        impact: '受影响的服务器',
+        impact: '回执数据',
         msg: '信息',
         advice: '建议',
         success: '正常',

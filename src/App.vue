@@ -13,7 +13,7 @@
             </el-button>
         </div>
         <div class="ZLPipeline-Buttom">
-            Version 1.1.7 (1023)
+            Version 1.1.8 (1108)
             <a href="https://github.com/Tyuwwe/ZL-Pipeline">Github</a>
             <a href="https://www.npmjs.com/package/zl-pipeline">NPM</a>
         </div>

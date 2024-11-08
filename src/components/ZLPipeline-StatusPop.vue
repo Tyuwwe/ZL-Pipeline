@@ -24,7 +24,9 @@
                      <div class="collapse-impact" v-if="data.data.impact.length">
                         <el-divider />
                         <div class="collapse-item-title" >{{ langPack.sp.impact }}</div>
-                        <el-tag class="collapse-impact-item" type="danger" v-for="ipt in data.data.impact">{{ ipt }}</el-tag>
+                        <div class="collapse-impact-item-container">
+                            <div class="collapse-impact-item" v-for="ipt in data.data.impact">{{ ipt }}</div>
+                        </div>
                      </div>
                      <div class="collapse-item" v-if="data.data.advice != ''">
                         <el-divider />
@@ -243,8 +245,14 @@ onMounted(() => {
     flex-wrap: wrap;
 }
 
+.collapse-impact-item-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .collapse-impact-item {
-    margin-right: 5px;
+    margin-bottom: 5px;
+    color: #c71515;
 }
 
 .collapse-item-title {

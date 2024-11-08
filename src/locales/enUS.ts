@@ -42,7 +42,7 @@ export default {
     sp: {
         no_item: 'No Result',
         exec_result: 'Execute Result',
-        impact: 'Impacted Servers',
+        impact: 'Return Data',
         msg: 'Message',
         advice: 'Advice',
         success: 'Success',

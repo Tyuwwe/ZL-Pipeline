@@ -4,7 +4,7 @@
 
 #### 一个单行流水线组件库（开发中）
 
-<img src="https://img.shields.io/badge/最新版-1.1.7-rgb(53,73,94).svg" alt="vue">
+<img src="https://img.shields.io/badge/最新版-1.1.8-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/Vue3-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/TypeScript-rgb(21, 59, 115).svg" alt="vue">
 <img src="https://img.shields.io/badge/Pipeline-rgb(21, 119, 115).svg" alt="vue">
