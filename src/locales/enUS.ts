@@ -10,6 +10,7 @@ export default {
         node_status_running: 'Running',
         node_status_waiting: 'Waiting',
         node_status_error: 'Error',
+        node_status_paused: 'Paused',
         node_desc: 'Description',
         node_contextmenu_current: 'Current Node',
         node_contextmenu_setting: 'Node Settings',

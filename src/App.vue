@@ -130,7 +130,7 @@ const pipelineData = ref([
     {
         name: '节点1',
         description: '示例节点描述1，该节点可以进行若干操作',
-        status: 'success',
+        status: 'paused',
         is_enable: true,
         child: [
             {
@@ -182,7 +182,7 @@ const pipelineData = ref([
                 name: '子节点6',
                 script: 'test.py',
                 description: '子节点描述',
-                status: 'success',
+                status: 'paused',
                 order: 1,
                 game_type: ['type1', 'type2'],
                 is_enable: true,
@@ -203,7 +203,7 @@ const pipelineData = ref([
                 time: '2024-09-13T06:59:57.530Z',
                 data: {
                 	msg: "操作1 已完成",
-                	impact: ['192.168.1.1', '1.54.32.4'],
+                	impact: ["{ 'code': 501, 'msg': '服务程序版本更新 - 执行失败。', 'data': [ 'ERR', '101.34.57.57', '/bin/bash /tmp/server_update_version.sh lzgwy \'cd /data1/srcfiles/roledepot/ && tar xf roledepot*.tgz -C /data1/server#cp /data1/config_cmdb/roledepot.properties /data1/server/roledepot/roledepot.properties#cp /data1/config_cmdb/start.sh /data1/server/roledepot/start.sh#cd /data1/server/roledepot/ && chmod 755 -R ./*\' && echo OK || echo ERR' ] }", '1.54.32.4'],
                 	advice: "服务器升配"
                 }
             },
@@ -338,7 +338,7 @@ const pipelineData = ref([
     {
         name: '节点5',
         description: '示例节点描述5，该节点可以进行若干操作',
-        status: 'waiting',
+        status: 'success',
         is_enable: true,
         child: [
             {

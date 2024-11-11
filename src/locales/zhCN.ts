@@ -10,6 +10,7 @@ export default {
         node_status_running: '运行中',
         node_status_waiting: '等待中',
         node_status_error: '执行出错',
+        node_status_paused: '已暂停',
         node_desc: '备注',
         node_contextmenu_current: '当前节点',
         node_contextmenu_setting: '节点设置',

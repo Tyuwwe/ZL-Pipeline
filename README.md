@@ -4,7 +4,7 @@
 
 #### A single-line Pipeline component package (Under Development)
 
-<img src="https://img.shields.io/badge/Latest-1.1.8-rgb(53,73,94).svg" alt="vue">
+<img src="https://img.shields.io/badge/Latest-1.1.9-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/Vue3-rgb(53,73,94).svg" alt="vue">
 <img src="https://img.shields.io/badge/TypeScript-rgb(21, 59, 115).svg" alt="vue">
 <img src="https://img.shields.io/badge/Pipeline-rgb(21, 119, 115).svg" alt="vue">
@@ -257,7 +257,7 @@ All of them will receive some certain typed data:
         name: string
         description: string
         status: string
-        // Status: success / running / waiting / failed
+        // Status: success / running / waiting / failed / paused
         is_enable: boolean
         child: {
             name: string
@@ -322,4 +322,4 @@ All of them will receive some certain typed data:
 
 > Author: Tyuwwe
 >
-> Date: 2024/10/21
+> Date: 2024/11/11

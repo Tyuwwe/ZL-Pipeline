@@ -234,6 +234,7 @@ class inputPipelineMetaData {
         this.sTitle = s
     }
 }
+
 const props = defineProps<{
     pipelineVisible: boolean;
     lang: string;
@@ -535,7 +536,7 @@ function deletePop(targetNode: any) {
 .ZLPipeline-Control {
     position: absolute;
     right: 30px;
-    top: 30px;
+    top: 20px;
     padding: 10px;
     width: 20px;
     height: 20px;
@@ -548,7 +549,7 @@ function deletePop(targetNode: any) {
 .ZLPipeline-Control:hover {
     padding: 15px;
     right: 25px;
-    top: 25px;
+    top: 15px;
     background-color: rgb(226, 177, 177);
 }
 
@@ -946,7 +947,7 @@ function deletePop(targetNode: any) {
 .hintIcon {
     height: 2.3rem; 
     transform: translateY(10px) !important;
-    vertical-align: auto !important;
+    vertical-align: inherit !important;
 }
 
 @keyframes warningTextInf {

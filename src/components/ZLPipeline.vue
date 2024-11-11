@@ -203,7 +203,8 @@ import {
     EditPen,
     More,
     Loading,
-    Remove
+    Remove,
+    VideoPause
 } from '@element-plus/icons-vue';
 
 class inputChildObj {
@@ -440,19 +441,7 @@ function deletePop(targetNode: any) {
 }
 
 interface statusEnum {
-    [key: string]: string;
-    success: string;
-    running: string;
-    waiting: string;
-    failed: string;
-}
-
-interface statusIconEnum {
     [key: string]: any;
-    success: any;
-    running: any;
-    waiting: any;
-    failed: any;
 }
 
 const nodeClassEnum: statusEnum = {
@@ -460,6 +449,7 @@ const nodeClassEnum: statusEnum = {
     'running': 'ZLPipeline-Node-Top Node-Running',
     'waiting': 'ZLPipeline-Node-Top Node-Waiting',
     'failed': 'ZLPipeline-Node-Top Node-Error',
+    'paused': 'ZLPipeline-Node-Top Node-Paused',
 }
 
 const nodeChildClassEnum: statusEnum = {
@@ -467,6 +457,7 @@ const nodeChildClassEnum: statusEnum = {
     'running': 'ZLPipeline-Node-ChildNode Child-Node-Running',
     'waiting': 'ZLPipeline-Node-ChildNode Child-Node-Waiting',
     'failed': 'ZLPipeline-Node-ChildNode Child-Node-Error',
+    'paused': 'ZLPipeline-Node-ChildNode Child-Node-Paused',
 }
 
 const nodeChildIconClassEnum: statusEnum = {
@@ -474,13 +465,15 @@ const nodeChildIconClassEnum: statusEnum = {
     'running': "ChildNode-Icon i-running",
     'waiting': "ChildNode-Icon i-waiting",
     'failed': "ChildNode-Icon i-failed",
+    'paused': "ChildNode-Icon i-paused",
 }
 
-const nodeChildIconEnum: statusIconEnum = {
+const nodeChildIconEnum: statusEnum = {
     'success': CircleCheck,
     'running': Loading,
     'waiting': More,
     'failed': CircleClose,
+    'paused': VideoPause,
 }
 
 const nodeStatusEnum: statusEnum = {
@@ -488,6 +481,7 @@ const nodeStatusEnum: statusEnum = {
     'running': langPack.value.pl.node_status_running,
     'waiting': langPack.value.pl.node_status_waiting,
     'failed': langPack.value.pl.node_status_error,
+    'paused': langPack.value.pl.node_status_paused,
 }
 
 function copyScriptName(scriptName: string) {
@@ -578,7 +572,7 @@ function copyScriptName(scriptName: string) {
 .ZLPipeline-Control {
     position: absolute;
     right: 30px;
-    top: 30px;
+    top: 20px;
     padding: 10px;
     width: 20px;
     height: 20px;
@@ -591,7 +585,7 @@ function copyScriptName(scriptName: string) {
 .ZLPipeline-Control:hover {
     padding: 15px;
     right: 25px;
-    top: 25px;
+    top: 15px;
     background-color: rgb(226, 177, 177);
 }
 
@@ -810,9 +804,9 @@ function copyScriptName(scriptName: string) {
 }
 
 .Node-Waiting {
-    background: linear-gradient(90deg,#f4f7ba 0%,#e9d0d0 100%); 
+    background: linear-gradient(90deg,#fcc19a 0%,#ece0bf 100%); 
     background-size: 2000%;
-    animation: animNode 5s infinite; 
+    animation: animNode 3s infinite; 
 }
 
 .Node-Error  {
@@ -820,6 +814,10 @@ function copyScriptName(scriptName: string) {
     background-size: 2000%;
     animation: animNode 2s infinite; 
     color: white;
+}
+
+.Node-Paused  {
+    background: linear-gradient(244deg,hsl(200, 76%, 84%) 0%,#e4e9ec 100%); 
 }
 
 .Node-Disabled  {
@@ -1015,6 +1013,7 @@ function copyScriptName(scriptName: string) {
 .hintIcon {
     height: 2.3rem; 
     transform: translateY(10px) !important;
+    vertical-align: inherit !important;
 }
 
 @keyframes warningTextInf {
